@@ -86,3 +86,7 @@ yarn-debug.log*
 /tmp/storage/*
 !/tmp/storage/
 !/tmp/storage/.keep
+
+# tailwindcss-rails
+/app/assets/builds/*
+!/app/assets/builds/.keep
