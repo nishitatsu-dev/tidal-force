@@ -40,6 +40,7 @@ gem "thruster", require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
+gem "devise", "~> 4.9"
 gem 'slim-rails', '~> 3.7'
 gem "tailwindcss-rails", "~> 4.2"
 
