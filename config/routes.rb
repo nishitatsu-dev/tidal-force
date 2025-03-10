@@ -2,6 +2,10 @@ Rails.application.routes.draw do
   root "home#index"
   get "home/index"
   get "supplement/index"
+  get "titles/index"
+  get "titles/create"
+  get "titles/update"
+  get "titles/destroy"
   devise_for :users
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
