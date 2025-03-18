@@ -41,7 +41,6 @@ gem "thruster", require: false
 # gem "image_processing", "~> 1.2"
 
 gem "devise", "~> 4.9"
-gem 'slim-rails', '~> 3.7'
 gem "tailwindcss-rails", "~> 4.2"
 
 group :development, :test do
