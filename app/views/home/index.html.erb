@@ -1,26 +1,24 @@
-<div>
-  <%# <h1 class="font-bold text-1xl">Home#index</h1> %>
-  <%# <p>Find me in app/views/home/index.html.erb</p> %>
-</div>
 
-<%= form_with scope: :record, method: :get do |f| %>
-  <%= f.label :location, "Location" %>
-  <%= f.select :location, [["稚内", "wakkanai"], ["青森", "aomori"], ["東京", "tokyo"], ["明石", "akashi"], ["鹿児島", "kagoshima"], ["那覇", "naha"], ["石垣", "ishigaki"]], { selected: "akashi" } %><br />
-  <%= f.label :start_at, "Start" %>
-  <%= f.date_field :start_at %><br />
-  <%= f.label :end_at, "End" %>
-  <%= f.date_field :end_at %><br />
+<%= form_with scope: :record, method: :get, html: { data: { turbo_frame: "chart_and_list" } } do |f| %>
   <%= f.checkbox :sun_checkbox %>
   <%= f.label :sun_checkbox, "Sun" %>
   <%= f.checkbox :moon_checkbox %>
   <%= f.label :moon_checkbox, "Moon" %>
   <%= f.checkbox :jupiter_checkbox %>
   <%= f.label :jupiter_checkbox, "Jupiter" %><br />
+  <%= f.label :location, "Location" %>
+  <%= f.select :location, [["根室", "NEMURO"], ["秋田", "AKITA"], ["東京", "TOKYO"], ["小笠原", "OGASAWARA"], ["高松", "TAKAMATSU"], ["鹿児島", "KAGOSHIMA"], ["那覇", "NAHA"]], { include_blank: true } %><br />
+  <%= f.label :start_at, "Start" %>
+  <%= f.date_field :start_at %><br />
+  <%= f.label :end_at, "End" %>
+  <%= f.date_field :end_at %><br />
   <%= f.submit  "計算する", { id: "calc_button" } %>
 <% end %>
 
-<div id="chart_vertical" style="width: 600px;height:400px;"></div>
-<%= render "chart_vertical" %>
+<%= turbo_frame_tag "chart_and_list" do %>
+  <div id="chart_vertical" style="width: 600px;height:400px;"></div>
+  <%= render "chart_vertical" %>
 
-<div id="chart_horizontal" style="width: 600px;height:400px;"></div>
-<%= render "chart_horizontal" %>
+  <div id="chart_horizontal" style="width: 600px;height:400px;"></div>
+  <%= render "chart_horizontal" %>
+<% end %>
