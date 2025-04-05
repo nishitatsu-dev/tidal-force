@@ -29,16 +29,40 @@ const location = first_form.record_location;
 const start_at = first_form.record_start_at;
 const end_at = first_form.record_end_at;
 const calcButton = first_form.calc_button;
+
 calcButton.addEventListener('click', () => {
   const main = new Main(start_at.value, end_at.value, location.value);
   const moonTidalForces = main.getMoonTidalForces;
   const sunTidalForces = main.getSunTidalForces;
   const jupiterDistances = main.getJupiterDistances;
 
-  sessionStorage.setItem("moonVerticals", moonTidalForces.verticals.flat());
-  sessionStorage.setItem("sunVerticals", sunTidalForces.verticals.flat());
+  const moonVerticals = moonTidalForces.verticals.flat();
+  const sunVerticals = sunTidalForces.verticals.flat();
+  const moonAndSunVerticals = moonVerticals.map((v, i) => v + sunVerticals[i]);
+  const xAxisData = generateXAxisData(start_at.value, end_at.value);
+
+  sessionStorage.setItem("moonVerticals", moonVerticals);
+  sessionStorage.setItem("sunVerticals", sunVerticals);
+  sessionStorage.setItem("moonAndSunVerticals", moonAndSunVerticals);
   sessionStorage.setItem("jupiterDistances", jupiterDistances.flat());
+  sessionStorage.setItem("xAxisData", xAxisData);
 });
+
+const generateXAxisData = (start_at_value, end_at_value) => {
+  const xAxisData = [];
+  const start_date = new Date(start_at_value);
+  const end_date = new Date(end_at_value);
+  const totalHour = Math.round((end_date - start_date) / MSEC_PER_DAY + 1) * HOUR_PER_DAY;
+  console.log(totalHour);
+  let dataPoint = new Date(start_at_value);
+  let dateHour = ""
+  for (let i=0; i < totalHour; i++) {
+    dataPoint.setHours(i);
+    dateHour = dataPoint.getMonth() + "/" + dataPoint.getDate() + "\n" + dataPoint.getHours() + ":00";
+    xAxisData.push(dateHour);
+  }
+  return xAxisData;
+}
 
 
 // 計算の最表面
@@ -95,7 +119,7 @@ export class ObserverState {
     const lastDay = new Date(this.lastDate);
     const firstJulianDay = firstDay.getTime() / MSEC_PER_DAY + UNIX_EPOCH_JULIAN_DATE;  // UNIXエポックで午前0時の値に補正済み
     const timeZoneOffset = firstDay.getTimezoneOffset() / MIN_PER_HOUR;
-    const dayTotal = (lastDay - firstDay) / MSEC_PER_DAY + 1;
+    const dayTotal = Math.round((lastDay - firstDay) / MSEC_PER_DAY) + 1;
     return { "firstJulianDay": firstJulianDay, "timeZoneOffset": timeZoneOffset, "dayTotal": dayTotal}
   }
 
