@@ -41,11 +41,21 @@ calcButton.addEventListener('click', () => {
   const moonAndSunVerticals = moonVerticals.map((v, i) => v + sunVerticals[i]);
   const xAxisData = generateXAxisData(start_at.value, end_at.value);
 
+  const moonLateralStrengths = moonTidalForces.laterals.strengths.flat();
+  const moonLateralAzimuths = moonTidalForces.laterals.azimuths.flat();
+  const sunLateralStrengths = sunTidalForces.laterals.strengths.flat();
+  const sunLateralAzimuths = sunTidalForces.laterals.azimuths.flat();
+
   sessionStorage.setItem("moonVerticals", moonVerticals);
   sessionStorage.setItem("sunVerticals", sunVerticals);
   sessionStorage.setItem("moonAndSunVerticals", moonAndSunVerticals);
   sessionStorage.setItem("jupiterDistances", jupiterDistances.flat());
   sessionStorage.setItem("xAxisData", xAxisData);
+
+  sessionStorage.setItem("moonLateralStrengths", moonLateralStrengths);
+  sessionStorage.setItem("moonLateralAzimuths", moonLateralAzimuths);
+  sessionStorage.setItem("sunLateralStrengths", sunLateralStrengths);
+  sessionStorage.setItem("sunLateralAzimuths", sunLateralAzimuths);
 });
 
 const generateXAxisData = (start_at_value, end_at_value) => {
