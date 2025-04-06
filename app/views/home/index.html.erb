@@ -1,11 +1,5 @@
 
 <%= form_with scope: :record, method: :get, html: { data: { turbo_frame: "chart_and_list" } } do |f| %>
-  <%= f.checkbox :sun_checkbox %>
-  <%= f.label :sun_checkbox, "Sun" %>
-  <%= f.checkbox :moon_checkbox %>
-  <%= f.label :moon_checkbox, "Moon" %>
-  <%= f.checkbox :jupiter_checkbox %>
-  <%= f.label :jupiter_checkbox, "Jupiter" %><br />
   <%= f.label :location, "Location" %>
   <%= f.select :location, [["根室", "NEMURO"], ["秋田", "AKITA"], ["東京", "TOKYO"], ["小笠原", "OGASAWARA"], ["高松", "TAKAMATSU"], ["鹿児島", "KAGOSHIMA"], ["那覇", "NAHA"]], { include_blank: true } %><br />
   <%= f.label :start_at, "Start" %>
