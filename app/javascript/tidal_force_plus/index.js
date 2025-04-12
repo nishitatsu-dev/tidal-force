@@ -63,8 +63,7 @@ const generateXAxisData = (start_at_value, end_at_value) => {
   const start_date = new Date(start_at_value);
   const end_date = new Date(end_at_value);
   const totalHour = Math.round((end_date - start_date) / MSEC_PER_DAY + 1) * HOUR_PER_DAY;
-  console.log(totalHour);
-  let dataPoint = new Date(start_at_value);
+  const dataPoint = new Date(start_at_value);
   let dateHour = ""
   for (let i=0; i < totalHour; i++) {
     dataPoint.setHours(i);
