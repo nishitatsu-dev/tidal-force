@@ -36,21 +36,25 @@ calcButton.addEventListener('click', () => {
   const sunTidalForces = main.getSunTidalForces;
   const jupiterDistances = main.getJupiterDistances;
 
+  const xAxisData = main.getDateTimes["xAxisData"];
+  const ISODateTimes = main.getDateTimes["ISODateTimes"];
+
   const moonVerticals = moonTidalForces.verticals.flat();
   const sunVerticals = sunTidalForces.verticals.flat();
   const moonAndSunVerticals = moonVerticals.map((v, i) => v + sunVerticals[i]);
-  const xAxisData = generateXAxisData(start_at.value, end_at.value);
 
   const moonLateralStrengths = moonTidalForces.laterals.strengths.flat();
   const moonLateralAzimuths = moonTidalForces.laterals.azimuths.flat();
   const sunLateralStrengths = sunTidalForces.laterals.strengths.flat();
   const sunLateralAzimuths = sunTidalForces.laterals.azimuths.flat();
 
+  sessionStorage.setItem("xAxisData", xAxisData);
+  sessionStorage.setItem("ISODateTimes", ISODateTimes);
+
   sessionStorage.setItem("moonVerticals", moonVerticals);
   sessionStorage.setItem("sunVerticals", sunVerticals);
   sessionStorage.setItem("moonAndSunVerticals", moonAndSunVerticals);
   sessionStorage.setItem("jupiterDistances", jupiterDistances.flat());
-  sessionStorage.setItem("xAxisData", xAxisData);
 
   sessionStorage.setItem("moonLateralStrengths", moonLateralStrengths);
   sessionStorage.setItem("moonLateralAzimuths", moonLateralAzimuths);
@@ -58,23 +62,8 @@ calcButton.addEventListener('click', () => {
   sessionStorage.setItem("sunLateralAzimuths", sunLateralAzimuths);
 });
 
-const generateXAxisData = (start_at_value, end_at_value) => {
-  const xAxisData = [];
-  const start_date = new Date(start_at_value);
-  const end_date = new Date(end_at_value);
-  const totalHour = Math.round((end_date - start_date) / MSEC_PER_DAY + 1) * HOUR_PER_DAY;
-  const dataPoint = new Date(start_at_value);
-  let dateHour = ""
-  for (let i=0; i < totalHour; i++) {
-    dataPoint.setHours(i);
-    dateHour = dataPoint.getMonth() + "/" + dataPoint.getDate() + "\n" + dataPoint.getHours() + ":00";
-    xAxisData.push(dateHour);
-  }
-  return xAxisData;
-}
 
-
-// 計算の最表面
+// 起潮力・惑星距離計算の最表層
 export class Main {
   constructor(start_at, end_at, location) {
     this.start_at = start_at;
@@ -112,6 +101,24 @@ export class Main {
     const jupiterDistances = jupiter.getDistances;
     return jupiterDistances;
   }
+
+  get getDateTimes() {
+    const totalHour = this.#getObserverState.getDateTimeDetails["dayTotal"] * HOUR_PER_DAY;
+    const xAxisData = [];
+    const ISODateTimes = [];
+    let dataPoint = new Date(this.start_at);
+    dataPoint.setHours(0);
+    let dateTime = "";
+    let ISODateTime = "";
+    for (let i=0; i < totalHour; i++) {
+      dateTime = dataPoint.toString();
+      xAxisData.push(dateTime);
+      ISODateTime = dataPoint.toISOString();
+      ISODateTimes.push(ISODateTime);
+      dataPoint.setHours(dataPoint.getHours() + 1);
+    }
+    return { "xAxisData": xAxisData, "ISODateTimes": ISODateTimes };
+  }
 }
 
 
@@ -123,7 +130,7 @@ export class ObserverState {
     this.location = location;
   }
 
-  get #getDateTimeDetails() {
+  get getDateTimeDetails() {
     const firstDay = new Date(this.firstDate);
     const lastDay = new Date(this.lastDate);
     const firstJulianDay = firstDay.getTime() / MSEC_PER_DAY + UNIX_EPOCH_JULIAN_DATE;  // UNIXエポックで午前0時の値に補正済み
@@ -133,7 +140,7 @@ export class ObserverState {
   }
 
   get getJulianCenturyNumberTs() {
-    const dateTimeDetails = this.#getDateTimeDetails;
+    const dateTimeDetails = this.getDateTimeDetails;
     let julianCenturyNumberT = 0;
     const julianCenturyNumberTs = [];
     const deltaT = DELTA_T["20170101"] / SEC_PER_HOUR;
@@ -150,7 +157,7 @@ export class ObserverState {
   #calcGreenwichSiderealTimes() {
     const julianCenturyNumberTs = this.getJulianCenturyNumberTs;
     const length = julianCenturyNumberTs.length;
-    const dateTimeDetails = this.#getDateTimeDetails;
+    const dateTimeDetails = this.getDateTimeDetails;
     const greenwichSiderealTimes = [];
     let t = 0;
     let gst = 0;
