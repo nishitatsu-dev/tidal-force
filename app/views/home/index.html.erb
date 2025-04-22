@@ -15,4 +15,17 @@
 
   <div id="chart_horizontal" style="width: 600px;height:400px;"></div>
   <%= render "chart_horizontal" %>
+
+  <div id="list" class="flex overflow-x-auto" style="width: 600px;height:800px;">
+    <div id="calc_results" class="border" style="width: 500px;height:800px;">
+      <%= render "calc_results" %>
+    </div>
+    <div id="titles_and_records" class="border" style="width: 500px;height:800px;">
+      <%= render "titles/index" %>
+      <%= render "records/index" %>
+    </div>
+  </div>
+  <div id="pagination" class="border" style="width: 600px;height:100px;">
+    <%= render "pagination" %>
+  </div>
 <% end %>
