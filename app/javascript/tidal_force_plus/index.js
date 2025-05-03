@@ -38,6 +38,7 @@ calcButton.addEventListener('click', () => {
 
   const xAxisData = main.getDateTimes["xAxisData"];
   const ISODateTimes = main.getDateTimes["ISODateTimes"];
+  const totalDay = main.getDateTimes["totalDay"];
 
   const moonVerticals = moonTidalForces.verticals.flat();
   const sunVerticals = sunTidalForces.verticals.flat();
@@ -50,6 +51,8 @@ calcButton.addEventListener('click', () => {
 
   sessionStorage.setItem("xAxisData", xAxisData);
   sessionStorage.setItem("ISODateTimes", ISODateTimes);
+  sessionStorage.setItem("firstDay", start_at.value);
+  sessionStorage.setItem("totalDay", totalDay);
 
   sessionStorage.setItem("moonVerticals", moonVerticals);
   sessionStorage.setItem("sunVerticals", sunVerticals);
@@ -103,7 +106,8 @@ export class Main {
   }
 
   get getDateTimes() {
-    const totalHour = this.#getObserverState.getDateTimeDetails["dayTotal"] * HOUR_PER_DAY;
+    const totalDay = this.#getObserverState.getDateTimeDetails["totalDay"];
+    const totalHour = totalDay * HOUR_PER_DAY;
     const xAxisData = [];
     const ISODateTimes = [];
     let dataPoint = new Date(this.start_at);
@@ -117,7 +121,7 @@ export class Main {
       ISODateTimes.push(ISODateTime);
       dataPoint.setHours(dataPoint.getHours() + 1);
     }
-    return { "xAxisData": xAxisData, "ISODateTimes": ISODateTimes };
+    return { "xAxisData": xAxisData, "ISODateTimes": ISODateTimes, "totalDay": totalDay };
   }
 }
 
@@ -135,8 +139,8 @@ export class ObserverState {
     const lastDay = new Date(this.lastDate);
     const firstJulianDay = firstDay.getTime() / MSEC_PER_DAY + UNIX_EPOCH_JULIAN_DATE;  // UNIXエポックで午前0時の値に補正済み
     const timeZoneOffset = firstDay.getTimezoneOffset() / MIN_PER_HOUR;
-    const dayTotal = Math.round((lastDay - firstDay) / MSEC_PER_DAY) + 1;
-    return { "firstJulianDay": firstJulianDay, "timeZoneOffset": timeZoneOffset, "dayTotal": dayTotal}
+    const totalDay = Math.round((lastDay - firstDay) / MSEC_PER_DAY) + 1;
+    return { "firstJulianDay": firstJulianDay, "timeZoneOffset": timeZoneOffset, "totalDay": totalDay}
   }
 
   get getJulianCenturyNumberTs() {
@@ -144,7 +148,7 @@ export class ObserverState {
     let julianCenturyNumberT = 0;
     const julianCenturyNumberTs = [];
     const deltaT = DELTA_T["20170101"] / SEC_PER_HOUR;
-    for (let i = 0; i < dateTimeDetails["dayTotal"]; i++) {
+    for (let i = 0; i < dateTimeDetails["totalDay"]; i++) {
       julianCenturyNumberT = (dateTimeDetails["firstJulianDay"] + i - 2451545) / 36525;  // ユリウス世紀、日の部分
       julianCenturyNumberTs[i] = [];
       for(let j = 0; j < HOUR_PER_DAY; j++) {
