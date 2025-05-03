@@ -18,10 +18,10 @@
 
   <div data-controller="calc-results">
     <div id="list" class="flex overflow-x-auto" style="width: 600px;height:800px;">
-      <div id="calc_results" class="border" style="width: 500px;height:800px;">
+      <div id="calc_results" class="border overflow-x-auto" style="width: 500px;height:800px;">
         <%= render "calc_results" %>
       </div>
-      <div id="titles_and_records" class="border" style="width: 500px;height:800px;">
+      <div id="titles_and_records" class="border overflow-x-auto" style="width: 500px;height:800px;">
         <%= render "titles/index" %>
         <%= render "records/index" %>
       </div>
