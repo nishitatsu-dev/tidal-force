@@ -25,13 +25,13 @@ export const LOCATION = {
 
 
 const first_form = document.forms[0];
-const location = first_form.record_location;
-const start_at = first_form.record_start_at;
-const end_at = first_form.record_end_at;
+const location = first_form.location;
+const first_date = first_form.first_date;
+const last_date = first_form.last_date;
 const calcButton = first_form.calc_button;
 
 calcButton.addEventListener('click', () => {
-  const main = new Main(start_at.value, end_at.value, location.value);
+  const main = new Main(first_date.value, last_date.value, location.value);
   const moonTidalForces = main.getMoonTidalForces;
   const sunTidalForces = main.getSunTidalForces;
   const jupiterDistances = main.getJupiterDistances;
@@ -51,7 +51,7 @@ calcButton.addEventListener('click', () => {
 
   sessionStorage.setItem("xAxisData", xAxisData);
   sessionStorage.setItem("ISODateTimes", ISODateTimes);
-  sessionStorage.setItem("firstDay", start_at.value);
+  sessionStorage.setItem("firstDay", first_date.value);
   sessionStorage.setItem("totalDay", totalDay);
 
   sessionStorage.setItem("moonVerticals", moonVerticals);
@@ -68,15 +68,15 @@ calcButton.addEventListener('click', () => {
 
 // 起潮力・惑星距離計算の最表層
 export class Main {
-  constructor(start_at, end_at, location) {
-    this.start_at = start_at;
-    this.end_at = end_at;
+  constructor(first_date, last_date, location) {
+    this.first_date = first_date;
+    this.last_date = last_date;
     this.location = location;
   }
 
   get #getObserverState() {
     const location = LOCATION[this.location];
-    const observerState = new ObserverState(this.start_at, this.end_at, location);
+    const observerState = new ObserverState(this.first_date, this.last_date, location);
     return observerState;
   }
 
@@ -110,7 +110,7 @@ export class Main {
     const totalHour = totalDay * HOUR_PER_DAY;
     const xAxisData = [];
     const ISODateTimes = [];
-    let dataPoint = new Date(this.start_at);
+    let dataPoint = new Date(this.first_date);
     dataPoint.setHours(0);
     let dateTime = "";
     let ISODateTime = "";
