@@ -10,15 +10,19 @@ export default class extends Controller {
   }
 
   showPagination(event) {
+    const pageId = event ? Number(event.currentTarget.id) : 0;
+
+    this.removeOldDOM(this.paginationTarget);
+    this.makeNewPagination(this.paginationTarget, pageId);
+  }
+
+  makeNewPagination(paginationTarget, pageId) {
     const firstDay = sessionStorage.getItem('firstDay');
     const totalDay = sessionStorage.getItem('totalDay');
-    const pageId = event ? Number(event.currentTarget.id) : 0;
     const paginator = new Paginator(firstDay, totalDay, pageId);
     const startIndex = paginator.getStartIndex();
     const endIndex = paginator.getEndIndex();
     const pageTexts = paginator.generatePageTexts();
-
-    this.removeOldDOM(this.paginationTarget);
 
     const ol = document.createElement('ol');
     for (let i = startIndex; i < endIndex + 1; i++) {
@@ -30,7 +34,7 @@ export default class extends Controller {
       li.dataset.action = "click->page-switch#showPage click->pagination#showPagination";
       ol.appendChild(li);
     }
-    this.paginationTarget.appendChild(ol);
+    paginationTarget.appendChild(ol);
   }
 
   removeOldDOM(thisTarget) {
