@@ -18,7 +18,7 @@ export default class extends Controller {
     const endIndex = paginator.getEndIndex();
     const pageTexts = paginator.generatePageTexts();
 
-    this.removeOldPagination();
+    this.removeOldDOM(this.paginationTarget);
 
     const ol = document.createElement('ol');
     for (let i = startIndex; i < endIndex + 1; i++) {
@@ -33,10 +33,10 @@ export default class extends Controller {
     this.paginationTarget.appendChild(ol);
   }
 
-  removeOldPagination() {
-    let paginationTarget = this.paginationTarget;
-    while (paginationTarget.firstChild) {
-      paginationTarget.removeChild(paginationTarget.firstChild);
+  removeOldDOM(thisTarget) {
+    const parentDOM = thisTarget;
+    while (parentDOM.firstChild) {
+      parentDOM.removeChild(parentDOM.firstChild);
     }
   }
 }
