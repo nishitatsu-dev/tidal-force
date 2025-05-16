@@ -17,20 +17,25 @@
   <div id="chart_horizontal" style="width: 600px;height:400px;"></div>
   <%= render "chart_horizontal" %>
 
-  <div data-controller="calc-results">
+  <div data-controller="page-switch">
     <div id="list" class="flex overflow-x-auto" style="width: 600px;height:800px;">
       <div id="calc_results" class="border overflow-x-auto" style="width: 500px;height:800px;">
         <%= render "calc_results" %>
       </div>
       <div id="titles_and_records" class="border overflow-x-auto" style="width: 500px;height:800px;">
         <%= render "titles/index" %>
-        <%= render "records/index" %>
-        <%= render @records %>
+        <p>【測定値】ログイン時のみ表示。編集可</p>
+        <%= turbo_frame_tag "records" do %>
+          <%= render @records %>
+        <% end %>
       </div>
     </div>
 
     <div id="pagination" class="border" style="width: 600px;height:150px;">
-      <%= render "pagination" %>
+        <%= form_with method: :get, data: { "page-switch-target" => "pageForm", "turbo-frame" => "records" } do |f| %>
+          <%= f.hidden_field :page, data: { "page-switch-target" => "pageField" } %>
+        <% end %>
+        <%= render "pagination" %>
     </div>
   </div>
 <% end %>

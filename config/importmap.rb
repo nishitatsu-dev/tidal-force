@@ -9,3 +9,5 @@ pin "echarts", to: "https://ga.jspm.io/npm:echarts@5.6.0/dist/echarts.esm.min.mj
 pin_all_from "app/javascript/tidal_force_plus", under: "tidal_force_plus"
 pin "paginator"
 pin "timezone"
+pin "calc_results_page"
+pin "records_page"

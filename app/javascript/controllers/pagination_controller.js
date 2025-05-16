@@ -27,7 +27,7 @@ export default class extends Controller {
       li.id = i;
       li.classList.add('cursor-pointer');
       li.textContent = pageTexts[i];
-      li.dataset.action = "click->calc-results#showTable click->pagination#showPagination";
+      li.dataset.action = "click->page-switch#showPage click->pagination#showPagination";
       ol.appendChild(li);
     }
     this.paginationTarget.appendChild(ol);

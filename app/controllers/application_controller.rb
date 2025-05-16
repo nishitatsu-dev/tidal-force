@@ -3,7 +3,8 @@ class ApplicationController < ActionController::Base
   allow_browser versions: :modern
 
   private
-  def user_timezone
-    params[:timezone] || "UTC"
+  def set_timezone_and_first_date
+    session[:timezone] = params[:timezone] || session[:timezone] || "Asia/Tokyo"
+    session[:first_date] = params[:first_date] || session[:first_date] || Date.today.strftime("%Y-%m-%d")
   end
 end
