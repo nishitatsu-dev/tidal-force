@@ -10,7 +10,6 @@ class ApplicationController < ActionController::Base
   def set_timezone_and_first_date
     session[:timezone] = permitted_params[:timezone] || session[:timezone] || "Asia/Tokyo"
     session[:first_date] = permitted_params[:first_date] || session[:first_date] || Date.today.strftime("%Y-%m-%d")
-    session[:page] = permitted_params[:page].to_i || session[:page] || 0
   end
 
   def get_page
