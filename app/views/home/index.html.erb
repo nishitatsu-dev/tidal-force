@@ -26,7 +26,7 @@
         <%= render "titles/index" %>
         <p>【測定値】ログイン時のみ表示。編集可</p>
         <%= turbo_frame_tag "records" do %>
-          <%= render @records %>
+          <%= render partial: "records/record", collection: @records %>
         <% end %>
       </div>
     </div>
