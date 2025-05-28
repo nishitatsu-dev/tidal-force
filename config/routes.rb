@@ -2,14 +2,8 @@ Rails.application.routes.draw do
   root "home#index"
   get "home/index"
   get "supplement/index"
-  get "titles/index"
-  get "titles/create"
-  get "titles/update"
-  get "titles/destroy"
-  get "records/index"
-  get "records/create"
-  get "records/update"
-  get "records/destroy"
+  resources :titles, only: [ :index, :create, :update, :destroy ]
+  resources :records
   devise_for :users
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

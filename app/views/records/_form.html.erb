@@ -1,0 +1,19 @@
+<%= turbo_frame_tag "record_#{extract_date_hour(record)}" do %>
+  <div class="row py-2 border-top">
+    <div class="col-4 my-auto">
+      <%= record.recorded_at.in_time_zone(session[:timezone]) %>
+    </div>
+    <%= form_with model: record do |f| %>
+      <%= f.hidden_field :recorded_at %>
+      <%= f.text_field :column_0 %>
+      <%= f.text_field :column_1 %>
+      <%= f.text_field :column_2 %>
+      <%= f.text_field :column_3 %>
+      <%= f.text_field :column_4 %>
+      <%= f.text_field :column_5 %>
+      <%= f.text_area :memo %>
+      <%= f.submit "更新" %>
+    <% end %>
+    <%= link_to "キャンセル", record %>
+  </div>
+<% end %>
