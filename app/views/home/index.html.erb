@@ -11,11 +11,13 @@
 <% end %>
 
 <%= turbo_frame_tag "chart_and_list" do %>
-  <div id="chart_vertical" style="width: 600px;height:400px;"></div>
-  <%= render "chart_vertical" %>
+  <div id="chart_vertical" style="width: 600px;height:400px;">
+    <%= render "chart_vertical" %>
+  </div>
 
-  <div id="chart_horizontal" style="width: 600px;height:400px;"></div>
-  <%= render "chart_horizontal" %>
+  <div id="chart_horizontal" style="width: 600px;height:400px;">
+    <%= render "chart_horizontal" %>
+  </div>
 
   <div data-controller="page-switch">
     <div id="list" class="flex overflow-x-auto" style="width: 600px;height:800px;">
