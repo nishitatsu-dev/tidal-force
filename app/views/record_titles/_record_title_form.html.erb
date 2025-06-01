@@ -1,0 +1,12 @@
+<%= turbo_frame_tag "record_title_#{record_title.column_number}" do %>
+  <div class="row py-2 border-top">
+    <div class="col-4 my-auto">
+      <%= form_with model: record_title do |f| %>
+        <%= f.hidden_field :column_number %>
+        <%= f.text_area :title %>
+        <%= f.submit "更新" %>
+      <% end %>
+      <%= link_to "キャンセル", record_title %>
+    </div>
+  </div>
+<% end %>

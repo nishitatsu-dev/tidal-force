@@ -29,4 +29,11 @@ class ApplicationController < ActionController::Base
       time_indexed_records[hour] || Record.new(recorded_at: date_hours[hour])
     end
   end
+
+  def make_record_titles
+    column_number_indexed_titles = RecordTitle.where(user_id: 1).index_by { |title| title.column_number }
+    (0..5).map do |column_number|
+      column_number_indexed_titles[column_number] || RecordTitle.new(column_number: column_number, title: "Column_#{column_number + 1}")
+    end
+  end
 end

@@ -23,7 +23,10 @@
         <%= render "calc_results" %>
       </div>
       <div id="titles_and_records" class="border overflow-x-auto" style="width: 500px;height:800px;">
-        <%= render "titles/index" %>
+        <p>【測定値の項目名】ログイン時のみ表示。編集可</p>
+        <div>time</div>
+        <%= render partial: "record_titles/record_title", collection: @record_titles %>
+        <div>memo</div>
         <p>【測定値】ログイン時のみ表示。編集可</p>
         <%= turbo_frame_tag "records" do %>
           <%= render partial: "records/record", collection: @records %>

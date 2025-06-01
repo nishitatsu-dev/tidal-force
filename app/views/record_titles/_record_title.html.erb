@@ -1,0 +1,17 @@
+<%= turbo_frame_tag "record_title_#{record_title.column_number}" do %>
+  <div class="row py-2 border-top">
+    <div class="col-4 my-auto">
+      <%= record_title.title %>
+    </div>
+    <div class="col-4">
+      <div class="d-flex justify-content-end">
+        <% if record_title.id.nil? %>
+          <%= link_to "編集", new_record_title_path(column_number: record_title.column_number), data: { turbo_frame: "record_title_#{record_title.column_number}" } %>
+        <% else %>
+          <%= link_to "編集", edit_record_title_path(record_title), data: { turbo_frame: "record_title_#{record_title.column_number}" } %>
+          <%= button_to "初期値", record_title, method: :delete %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>

@@ -1,5 +1,6 @@
 class HomeController < ApplicationController
   def index
+    @record_titles = make_record_titles
     set_timezone_and_first_date
     Time.use_zone(session[:timezone]) do
       date = Date.parse(session[:first_date]).advance(days: get_page).strftime("%Y-%m-%d")
