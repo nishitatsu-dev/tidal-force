@@ -7,10 +7,30 @@ export class CalcResultsPage {
 
   makeNewTable(pageId) {
     const times = [
-      '00:00', '01:00', '02:00', '03:00', '04:00', '05:00',
-      '06:00', '07:00', '08:00', '09:00', '10:00', '11:00',
-      '12:00', '13:00', '14:00', '15:00', '16:00', '17:00',
-      '18:00', '19:00', '20:00', '21:00', '22:00', '23:00'
+      "00:00",
+      "01:00",
+      "02:00",
+      "03:00",
+      "04:00",
+      "05:00",
+      "06:00",
+      "07:00",
+      "08:00",
+      "09:00",
+      "10:00",
+      "11:00",
+      "12:00",
+      "13:00",
+      "14:00",
+      "15:00",
+      "16:00",
+      "17:00",
+      "18:00",
+      "19:00",
+      "20:00",
+      "21:00",
+      "22:00",
+      "23:00",
     ];
     const calcResults = this.#getCalcResults();
 
@@ -29,15 +49,47 @@ export class CalcResultsPage {
   }
 
   #getCalcResults() {
-    const totalDay = sessionStorage.getItem('totalDay');
-    const moonVerticals2D = this.#transform1DTo2D(sessionStorage.getItem('moonVerticals').split(','), HOUR_PER_DAY, totalDay);
-    const sunVerticals2D = this.#transform1DTo2D(sessionStorage.getItem('sunVerticals').split(','), HOUR_PER_DAY, totalDay);
-    const moonAndSunVerticals2D = this.#transform1DTo2D(sessionStorage.getItem('moonAndSunVerticals').split(','), HOUR_PER_DAY, totalDay);
-    const jupiterDistances2D = this.#transform1DTo2D(sessionStorage.getItem('jupiterDistances').split(','), HOUR_PER_DAY, totalDay);
-    const moonLateralStrengths2D = this.#transform1DTo2D(sessionStorage.getItem('moonLateralStrengths').split(','), HOUR_PER_DAY, totalDay);
-    const sunLateralStrengths2D = this.#transform1DTo2D(sessionStorage.getItem('sunLateralStrengths').split(','), HOUR_PER_DAY, totalDay);
-    const moonLateralAzimuths2D = this.#transform1DTo2D(sessionStorage.getItem('moonLateralAzimuths').split(','), HOUR_PER_DAY, totalDay);
-    const sunLateralAzimuths2D = this.#transform1DTo2D(sessionStorage.getItem('sunLateralAzimuths').split(','), HOUR_PER_DAY, totalDay);
+    const totalDay = sessionStorage.getItem("totalDay");
+    const moonVerticals2D = this.#transform1DTo2D(
+      sessionStorage.getItem("moonVerticals").split(","),
+      HOUR_PER_DAY,
+      totalDay,
+    );
+    const sunVerticals2D = this.#transform1DTo2D(
+      sessionStorage.getItem("sunVerticals").split(","),
+      HOUR_PER_DAY,
+      totalDay,
+    );
+    const moonAndSunVerticals2D = this.#transform1DTo2D(
+      sessionStorage.getItem("moonAndSunVerticals").split(","),
+      HOUR_PER_DAY,
+      totalDay,
+    );
+    const jupiterDistances2D = this.#transform1DTo2D(
+      sessionStorage.getItem("jupiterDistances").split(","),
+      HOUR_PER_DAY,
+      totalDay,
+    );
+    const moonLateralStrengths2D = this.#transform1DTo2D(
+      sessionStorage.getItem("moonLateralStrengths").split(","),
+      HOUR_PER_DAY,
+      totalDay,
+    );
+    const sunLateralStrengths2D = this.#transform1DTo2D(
+      sessionStorage.getItem("sunLateralStrengths").split(","),
+      HOUR_PER_DAY,
+      totalDay,
+    );
+    const moonLateralAzimuths2D = this.#transform1DTo2D(
+      sessionStorage.getItem("moonLateralAzimuths").split(","),
+      HOUR_PER_DAY,
+      totalDay,
+    );
+    const sunLateralAzimuths2D = this.#transform1DTo2D(
+      sessionStorage.getItem("sunLateralAzimuths").split(","),
+      HOUR_PER_DAY,
+      totalDay,
+    );
 
     return [
       moonVerticals2D,
@@ -47,7 +99,7 @@ export class CalcResultsPage {
       moonLateralStrengths2D,
       sunLateralStrengths2D,
       moonLateralAzimuths2D,
-      sunLateralAzimuths2D
+      sunLateralAzimuths2D,
     ];
   }
 

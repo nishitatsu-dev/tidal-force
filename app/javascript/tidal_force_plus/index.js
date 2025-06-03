@@ -14,15 +14,14 @@ export const EARTH_RADIUS = 6378136.6; // m
 export const AU = 149597870700; // m
 
 export const LOCATION = {
-  "NEMURO" : { "longitude": 145.583, "latitude": 43.333 },
-  "AKITA" : { "longitude": 140.117, "latitude": 39.717 },
-  "TOKYO" : { "longitude": 139.733, "latitude": 35.65 },
-  "OGASAWARA" : { "longitude": 142.183, "latitude": 27.083 },
-  "TAKAMATSU" : { "longitude": 134.05, "latitude": 34.35 },
-  "KAGOSHIMA" : { "longitude": 130.55, "latitude": 31.5 },
-  "NAHA" : { "longitude": 127.667, "latitude": 26.216 }
-}
-
+  NEMURO: { longitude: 145.583, latitude: 43.333 },
+  AKITA: { longitude: 140.117, latitude: 39.717 },
+  TOKYO: { longitude: 139.733, latitude: 35.65 },
+  OGASAWARA: { longitude: 142.183, latitude: 27.083 },
+  TAKAMATSU: { longitude: 134.05, latitude: 34.35 },
+  KAGOSHIMA: { longitude: 130.55, latitude: 31.5 },
+  NAHA: { longitude: 127.667, latitude: 26.216 },
+};
 
 const first_form = document.forms[0];
 const location = first_form.location;
@@ -30,7 +29,7 @@ const first_date = first_form.first_date;
 const last_date = first_form.last_date;
 const calcButton = first_form.calc_button;
 
-calcButton.addEventListener('click', () => {
+calcButton.addEventListener("click", () => {
   const main = new Main(first_date.value, last_date.value, location.value);
   const moonTidalForces = main.getMoonTidalForces;
   const sunTidalForces = main.getSunTidalForces;
@@ -65,7 +64,6 @@ calcButton.addEventListener('click', () => {
   sessionStorage.setItem("sunLateralAzimuths", sunLateralAzimuths);
 });
 
-
 // 起潮力・惑星距離計算の最表層
 export class Main {
   constructor(first_date, last_date, location) {
@@ -76,7 +74,11 @@ export class Main {
 
   get #getObserverState() {
     const location = LOCATION[this.location];
-    const observerState = new ObserverState(this.first_date, this.last_date, location);
+    const observerState = new ObserverState(
+      this.first_date,
+      this.last_date,
+      location,
+    );
     return observerState;
   }
 
@@ -89,14 +91,20 @@ export class Main {
     const moonTidalForce = new TidalForce(moon);
     const moonVerticalTidalForces = moonTidalForce.calcVerticalTidalForces();
     const moonLateralTidalForces = moonTidalForce.calcLateralTidalForces();
-    return { "verticals": moonVerticalTidalForces, "laterals": moonLateralTidalForces };
+    return {
+      verticals: moonVerticalTidalForces,
+      laterals: moonLateralTidalForces,
+    };
   }
 
   get getSunTidalForces() {
     const sunTidalForce = new TidalForce(this.#getSunInstance);
     const sunVerticalTidalForces = sunTidalForce.calcVerticalTidalForces();
     const sunLateralTidalForces = sunTidalForce.calcLateralTidalForces();
-    return { "verticals": sunVerticalTidalForces, "laterals": sunLateralTidalForces };
+    return {
+      verticals: sunVerticalTidalForces,
+      laterals: sunLateralTidalForces,
+    };
   }
 
   get getJupiterDistances() {
@@ -114,17 +122,20 @@ export class Main {
     dataPoint.setHours(0);
     let dateTime = "";
     let ISODateTime = "";
-    for (let i=0; i < totalHour; i++) {
+    for (let i = 0; i < totalHour; i++) {
       dateTime = dataPoint.toString();
       xAxisData.push(dateTime);
       ISODateTime = dataPoint.toISOString();
       ISODateTimes.push(ISODateTime);
       dataPoint.setHours(dataPoint.getHours() + 1);
     }
-    return { "xAxisData": xAxisData, "ISODateTimes": ISODateTimes, "totalDay": totalDay };
+    return {
+      xAxisData: xAxisData,
+      ISODateTimes: ISODateTimes,
+      totalDay: totalDay,
+    };
   }
 }
-
 
 // 観測地点の条件を指定
 export class ObserverState {
@@ -137,10 +148,15 @@ export class ObserverState {
   get getDateTimeDetails() {
     const firstDay = new Date(this.firstDate);
     const lastDay = new Date(this.lastDate);
-    const firstJulianDay = firstDay.getTime() / MSEC_PER_DAY + UNIX_EPOCH_JULIAN_DATE;  // UNIXエポックで午前0時の値に補正済み
+    const firstJulianDay =
+      firstDay.getTime() / MSEC_PER_DAY + UNIX_EPOCH_JULIAN_DATE; // UNIXエポックで午前0時の値に補正済み
     const timeZoneOffset = firstDay.getTimezoneOffset() / MIN_PER_HOUR;
     const totalDay = Math.round((lastDay - firstDay) / MSEC_PER_DAY) + 1;
-    return { "firstJulianDay": firstJulianDay, "timeZoneOffset": timeZoneOffset, "totalDay": totalDay}
+    return {
+      firstJulianDay: firstJulianDay,
+      timeZoneOffset: timeZoneOffset,
+      totalDay: totalDay,
+    };
   }
 
   get getJulianCenturyNumberTs() {
@@ -149,10 +165,13 @@ export class ObserverState {
     const julianCenturyNumberTs = [];
     const deltaT = DELTA_T["20170101"] / SEC_PER_HOUR;
     for (let i = 0; i < dateTimeDetails["totalDay"]; i++) {
-      julianCenturyNumberT = (dateTimeDetails["firstJulianDay"] + i - 2451545) / 36525;  // ユリウス世紀、日の部分
+      julianCenturyNumberT =
+        (dateTimeDetails["firstJulianDay"] + i - 2451545) / 36525; // ユリウス世紀、日の部分
       julianCenturyNumberTs[i] = [];
-      for(let j = 0; j < HOUR_PER_DAY; j++) {
-        julianCenturyNumberTs[i][j] = julianCenturyNumberT + ((deltaT + j + dateTimeDetails["timeZoneOffset"]) / 24) / 36525;  // ユリウス世紀、時間の部分
+      for (let j = 0; j < HOUR_PER_DAY; j++) {
+        julianCenturyNumberTs[i][j] =
+          julianCenturyNumberT +
+          (deltaT + j + dateTimeDetails["timeZoneOffset"]) / 24 / 36525; // ユリウス世紀、時間の部分
       }
     }
     return julianCenturyNumberTs;
@@ -172,11 +191,12 @@ export class ObserverState {
     // 第2項は値が大きいので、24時=0時として加算。剰余の計算はマイナスの場合にも対応
     for (let i = 0; i < length; i++) {
       greenwichSiderealTimes[i] = [];
-      for(let j = 0; j < HOUR_PER_DAY; j++) {
+      for (let j = 0; j < HOUR_PER_DAY; j++) {
         t = julianCenturyNumberTs[i][j];
-        gst = 6.697375 + 0.0000259 * t * t + j + dateTimeDetails["timeZoneOffset"];
-        gst = gst + ((2400.0513369 * t % 24) + 24) % 24;
-        gst = ((gst % 24) +24) % 24;
+        gst =
+          6.697375 + 0.0000259 * t * t + j + dateTimeDetails["timeZoneOffset"];
+        gst = gst + ((((2400.0513369 * t) % 24) + 24) % 24);
+        gst = ((gst % 24) + 24) % 24;
         greenwichSiderealTimes[i][j] = gst;
       }
     }
@@ -189,13 +209,14 @@ export class ObserverState {
     const length = greenwichSiderealTimes.length;
     const localHourAngles = [];
     let localHourAngle = 0;
-    const localLon = this.location["longitude"] / 15;  // 度→時に単位変換
+    const localLon = this.location["longitude"] / 15; // 度→時に単位変換
     // forループ内のequatorialLons（ある瞬時の天体の赤経）も、度→時に単位変換している
     for (let i = 0; i < length; i++) {
       localHourAngles[i] = [];
       for (let j = 0; j < 24; j++) {
-        localHourAngle = greenwichSiderealTimes[i][j] + localLon - equatorialLons[i][j] / 15;
-        localHourAngle = ((localHourAngle % 24) +24) % 24;
+        localHourAngle =
+          greenwichSiderealTimes[i][j] + localLon - equatorialLons[i][j] / 15;
+        localHourAngle = ((localHourAngle % 24) + 24) % 24;
         localHourAngles[i][j] = localHourAngle;
       }
     }
@@ -203,7 +224,6 @@ export class ObserverState {
     return localHourAngles;
   }
 }
-
 
 // 月に関わる計算
 export class Moon {
@@ -213,67 +233,13 @@ export class Moon {
 
   #calcLongitude(t) {
     const coefficients = [
-      0.0003,
-      0.0003,
-      0.0003,
-      0.0003,
-      0.0003,
-      0.0003,
-      0.0003,
-      0.0004,
-      0.0004,
-      0.0005,
-      0.0005,
-      0.0005,
-      0.0006,
-      0.0006,
-      0.0007,
-      0.0007,
-      0.0007,
-      0.0007,
-      0.0008,
-      0.0009,
-      0.0011,
-      0.0012,
-      0.0016,
-      0.0018,
-      0.0021,
-      0.0021,
-      0.0021,
-      0.0022,
-      0.0023,
-      0.0024,
-      0.0026,
-      0.0027,
-      0.0028,
-      0.0037,
-      0.0038,
-      0.0040,
-      0.0040,
-      0.0040,
-      0.0050,
-      0.0052,
-      0.0068,
-      0.0079,
-      0.0085,
-      0.0100,
-      0.0107,
-      0.0110,
-      0.0125,
-      0.0154,
-      0.0304,
-      0.0347,
-      0.0409,
-      0.0458,
-      0.0533,
-      0.0571,
-      0.0588,
-      0.1144,
-      0.1851,
-      0.2136,
-      0.6583,
-      1.2740,
-      6.2888
+      0.0003, 0.0003, 0.0003, 0.0003, 0.0003, 0.0003, 0.0003, 0.0004, 0.0004,
+      0.0005, 0.0005, 0.0005, 0.0006, 0.0006, 0.0007, 0.0007, 0.0007, 0.0007,
+      0.0008, 0.0009, 0.0011, 0.0012, 0.0016, 0.0018, 0.0021, 0.0021, 0.0021,
+      0.0022, 0.0023, 0.0024, 0.0026, 0.0027, 0.0028, 0.0037, 0.0038, 0.004,
+      0.004, 0.004, 0.005, 0.0052, 0.0068, 0.0079, 0.0085, 0.01, 0.0107, 0.011,
+      0.0125, 0.0154, 0.0304, 0.0347, 0.0409, 0.0458, 0.0533, 0.0571, 0.0588,
+      0.1144, 0.1851, 0.2136, 0.6583, 1.274, 6.2888,
     ];
     const degrees = [
       2322131 * t + 191,
@@ -336,12 +302,13 @@ export class Moon {
       954397.74 * t + 179.93,
       890534.22 * t + 145.7,
       413335.35 * t + 10.74,
-      477198.868 * t + 44.963
+      477198.868 * t + 44.963,
     ];
     const length = coefficients.length;
     let longitude = 0;
-    for(let i = 0; i < length; i++) {
-      longitude = longitude + coefficients[i] * Math.cos(degrees[i] * Math.PI / 180);
+    for (let i = 0; i < length; i++) {
+      longitude =
+        longitude + coefficients[i] * Math.cos((degrees[i] * Math.PI) / 180);
     }
     longitude = longitude + 218.3162 + 481267.8809 * t;
     longitude = ((longitude % 360) + 360) % 360;
@@ -350,51 +317,11 @@ export class Moon {
 
   #calcLatitude(t) {
     const coefficients = [
-      0.0003,
-      0.0003,
-      0.0003,
-      0.0003,
-      0.0003,
-      0.0004,
-      0.0004,
-      0.0005,
-      0.0005,
-      0.0005,
-      0.0006,
-      0.0006,
-      0.0007,
-      0.0008,
-      0.0009,
-      0.0010,
-      0.0011,
-      0.0013,
-      0.0013,
-      0.0014,
-      0.0015,
-      0.0015,
-      0.0015,
-      0.0018,
-      0.0018,
-      0.0018,
-      0.0019,
-      0.0021,
-      0.0022,
-      0.0022,
-      0.0025,
-      0.0034,
-      0.0042,
-      0.0043,
-      0.0082,
-      0.0088,
-      0.0093,
-      0.0172,
-      0.0326,
-      0.0463,
-      0.0554,
-      0.1733,
-      0.2777,
-      0.2806,
-      5.1281
+      0.0003, 0.0003, 0.0003, 0.0003, 0.0003, 0.0004, 0.0004, 0.0005, 0.0005,
+      0.0005, 0.0006, 0.0006, 0.0007, 0.0008, 0.0009, 0.001, 0.0011, 0.0013,
+      0.0013, 0.0014, 0.0015, 0.0015, 0.0015, 0.0018, 0.0018, 0.0018, 0.0019,
+      0.0021, 0.0022, 0.0022, 0.0025, 0.0034, 0.0042, 0.0043, 0.0082, 0.0088,
+      0.0093, 0.0172, 0.0326, 0.0463, 0.0554, 0.1733, 0.2777, 0.2806, 5.1281,
     ];
     const degrees = [
       335334 * t + 57,
@@ -441,12 +368,13 @@ export class Moon {
       407332.2 * t + 52.43,
       6003.15 * t + 48.31,
       960400.89 * t + 138.24,
-      483202.019 * t + 3.273
+      483202.019 * t + 3.273,
     ];
     const length = coefficients.length;
     let latitude = 0;
-    for(let i = 0; i < length; i++) {
-      latitude = latitude + coefficients[i] * Math.cos(degrees[i] * Math.PI / 180);
+    for (let i = 0; i < length; i++) {
+      latitude =
+        latitude + coefficients[i] * Math.cos((degrees[i] * Math.PI) / 180);
     }
     latitude = ((latitude % 360) + 360) % 360;
     return latitude;
@@ -454,48 +382,12 @@ export class Moon {
 
   #calcParallax(t) {
     const coefficients = [
-      0.000005,
-      0.000006,
-      0.000006,
-      0.000007,
-      0.000007,
-      0.000009,
-      0.000010,
-      0.000011,
-      0.000011,
-      0.000012,
-      0.000013,
-      0.000013,
-      0.000013,
-      0.000019,
-      0.000023,
-      0.000026,
-      0.000029,
-      0.000030,
-      0.000031,
-      0.000033,
-      0.000034,
-      0.000041,
-      0.000063,
-      0.000064,
-      0.000073,
-      0.000078,
-      0.000083,
-      0.000084,
-      0.000103,
-      0.000111,
-      0.000167,
-      0.000173,
-      0.000197,
-      0.000263,
-      0.000271,
-      0.000319,
-      0.0004,
-      0.000531,
-      0.000858,
-      0.002824,
-      0.007842,
-      0.00953,
+      0.000005, 0.000006, 0.000006, 0.000007, 0.000007, 0.000009, 0.00001,
+      0.000011, 0.000011, 0.000012, 0.000013, 0.000013, 0.000013, 0.000019,
+      0.000023, 0.000026, 0.000029, 0.00003, 0.000031, 0.000033, 0.000034,
+      0.000041, 0.000063, 0.000064, 0.000073, 0.000078, 0.000083, 0.000084,
+      0.000103, 0.000111, 0.000167, 0.000173, 0.000197, 0.000263, 0.000271,
+      0.000319, 0.0004, 0.000531, 0.000858, 0.002824, 0.007842, 0.00953,
       0.05182,
     ];
     const degrees = [
@@ -541,19 +433,20 @@ export class Moon {
       954397.74 * t + 269.93,
       890534.22 * t + 235.7,
       413335.35 * t + 100.74,
-      477198.868 * t + 134.963
+      477198.868 * t + 134.963,
     ];
     const length = coefficients.length;
     let parallax = 0;
-    for(let i = 0; i < length; i++) {
-      parallax = parallax + coefficients[i] * Math.cos(degrees[i] * Math.PI / 180);
+    for (let i = 0; i < length; i++) {
+      parallax =
+        parallax + coefficients[i] * Math.cos((degrees[i] * Math.PI) / 180);
     }
     parallax = parallax + 0.950725;
     return parallax;
   }
 
   #calcDistance(t) {
-    const distance = 1 / Math.sin(this.#calcParallax(t) * Math.PI / 180);
+    const distance = 1 / Math.sin((this.#calcParallax(t) * Math.PI) / 180);
     return distance;
   }
 
@@ -603,10 +496,9 @@ export class Moon {
     //   G * MASS_MOON * EARTH_RADIUS / (EARTH_RADIUS * EARTH_RADIUS * EARTH_RADIUS);
     // ・tidalForceの算出時に距離の３乗で割るので、距離の単位変換をここで行っている
     // ・単位質量あたり（* 1 は省略）
-    return G * MASS_MOON / (EARTH_RADIUS * EARTH_RADIUS);
+    return (G * MASS_MOON) / (EARTH_RADIUS * EARTH_RADIUS);
   }
 }
-
 
 // 太陽に関わる計算
 export class Sun {
@@ -631,7 +523,7 @@ export class Sun {
       0.002,
       0.02,
       -0.0048 * t,
-      1.9147
+      1.9147,
     ];
     const degrees = [
       31557 * t + 161,
@@ -649,12 +541,13 @@ export class Sun {
       32964 * t + 158,
       71998.1 * t + 265.1,
       35999.05 * t + 267.52,
-      35999.05 * t + 267.52
+      35999.05 * t + 267.52,
     ];
     const length = coefficients.length;
     let longitude = 0;
-    for(let i = 0; i < length; i++) {
-      longitude = longitude + coefficients[i] * Math.cos(degrees[i] * Math.PI / 180);
+    for (let i = 0; i < length; i++) {
+      longitude =
+        longitude + coefficients[i] * Math.cos((degrees[i] * Math.PI) / 180);
     }
     longitude = longitude + 280.4659 + 36000.7695 * t;
     longitude = ((longitude % 360) + 360) % 360;
@@ -674,7 +567,7 @@ export class Sun {
       0.000031,
       0.000139,
       -0.000042 * t,
-      0.016706
+      0.016706,
     ];
     const degrees = [
       33718 * t + 226,
@@ -684,12 +577,13 @@ export class Sun {
       445267 * t + 298,
       71998 * t + 175,
       35999.05 * t + 177.53,
-      35999.05 * t + 177.53
+      35999.05 * t + 177.53,
     ];
     const length = coefficients.length;
     let distance = 0;
-    for(let i = 0; i < length; i++) {
-      distance = distance + coefficients[i] * Math.cos(degrees[i] * Math.PI / 180);
+    for (let i = 0; i < length; i++) {
+      distance =
+        distance + coefficients[i] * Math.cos((degrees[i] * Math.PI) / 180);
     }
     distance = distance + 1.00014;
     return distance;
@@ -739,10 +633,9 @@ export class Sun {
     // TidalForce計算用の係数
     // ・tidalForceの算出時に距離の３乗で割るので、距離の単位変換をここで行っている
     // ・単位質量あたり（* 1 は省略）
-    return G * MASS_SUN * EARTH_RADIUS / (AU * AU * AU);
+    return (G * MASS_SUN * EARTH_RADIUS) / (AU * AU * AU);
   }
 }
-
 
 // 木星に関わる計算
 export class Jupiter {
@@ -755,7 +648,7 @@ export class Jupiter {
     const coefficients = [
       0.00003,
       0.00009,
-      0.00010,
+      0.0001,
       0.00012,
       0.00028 * t,
       0.00029,
@@ -777,7 +670,7 @@ export class Jupiter {
       0.0437 * t,
       0.05532,
       0.17575,
-      5.54603
+      5.54603,
     ];
     const degrees = [
       12691 * t + 195,
@@ -804,12 +697,13 @@ export class Jupiter {
       6071.843 * t + 218.916,
       3624.312 * t + 237.453,
       6083.2578 * t + 309.5012,
-      3034.53346 * t + 289.68429
+      3034.53346 * t + 289.68429,
     ];
     const length = coefficients.length;
     let helioLon = 0;
-    for(let i = 0; i < length; i++) {
-      helioLon = helioLon + coefficients[i] * Math.cos(degrees[i] * Math.PI / 180);
+    for (let i = 0; i < length; i++) {
+      helioLon =
+        helioLon + coefficients[i] * Math.cos((degrees[i] * Math.PI) / 180);
     }
     helioLon = helioLon + 34.39356 + 3036.08406 * t;
     helioLon = ((helioLon % 360) + 360) % 360;
@@ -837,7 +731,7 @@ export class Jupiter {
       0.02141 * t,
       0.06295,
       0.06299,
-      1.30086
+      1.30086,
     ];
     const degrees = [
       799 * t + 181,
@@ -859,12 +753,13 @@ export class Jupiter {
       3034.269 * t + 309.356,
       6068.687 * t + 223.544,
       0,
-      3034.12633 * t + 203.91874
+      3034.12633 * t + 203.91874,
     ];
     const length = coefficients.length;
     let helioLat = 0;
-    for(let i = 0; i < length; i++) {
-      helioLat = helioLat + coefficients[i] * Math.cos(degrees[i] * Math.PI / 180);
+    for (let i = 0; i < length; i++) {
+      helioLat =
+        helioLat + coefficients[i] * Math.cos((degrees[i] * Math.PI) / 180);
     }
     helioLat = ((helioLat % 360) + 360) % 360;
     return helioLat;
@@ -879,7 +774,7 @@ export class Jupiter {
       0.000012,
       0.000016,
       0.000017,
-      0.000030 * t,
+      0.00003 * t,
       0.000057 * t,
       0.000061,
       0.000061,
@@ -892,10 +787,10 @@ export class Jupiter {
       0.000309 * t,
       0.000612 * t,
       0.000635,
-      0.000880,
+      0.00088,
       0.002802,
       0.006134,
-      0.251681
+      0.251681,
     ];
     const degrees = [
       9560 * t + 138,
@@ -921,12 +816,13 @@ export class Jupiter {
       2406 * t + 46,
       3624.5 * t + 147.7,
       6066.1 * t + 219,
-      3034.534 * t + 199.614
+      3034.534 * t + 199.614,
     ];
     const length = coefficients.length;
     let helioDist = 0;
-    for(let i = 0; i < length; i++) {
-      helioDist = helioDist + coefficients[i] * Math.cos(degrees[i] * Math.PI / 180);
+    for (let i = 0; i < length; i++) {
+      helioDist =
+        helioDist + coefficients[i] * Math.cos((degrees[i] * Math.PI) / 180);
     }
     helioDist = helioDist + 5.209105;
     return helioDist;
@@ -939,7 +835,9 @@ export class Jupiter {
     for (let i = 0; i < length; i++) {
       helioLons[i] = [];
       for (let j = 0; j < HOUR_PER_DAY; j++) {
-        helioLons[i][j] = this.#calcHeliocentricLongitude(julianCenturyNumberTs[i][j]);
+        helioLons[i][j] = this.#calcHeliocentricLongitude(
+          julianCenturyNumberTs[i][j],
+        );
       }
     }
     return helioLons;
@@ -952,7 +850,9 @@ export class Jupiter {
     for (let i = 0; i < length; i++) {
       helioLats[i] = [];
       for (let j = 0; j < HOUR_PER_DAY; j++) {
-        helioLats[i][j] = this.#calcHeliocentricLatitude(julianCenturyNumberTs[i][j]);
+        helioLats[i][j] = this.#calcHeliocentricLatitude(
+          julianCenturyNumberTs[i][j],
+        );
       }
     }
     return helioLats;
@@ -965,7 +865,9 @@ export class Jupiter {
     for (let i = 0; i < length; i++) {
       helioDists[i] = [];
       for (let j = 0; j < HOUR_PER_DAY; j++) {
-        helioDists[i][j] = this.#calcHeliocentricDistance(julianCenturyNumberTs[i][j]);
+        helioDists[i][j] = this.#calcHeliocentricDistance(
+          julianCenturyNumberTs[i][j],
+        );
       }
     }
     return helioDists;
@@ -973,7 +875,11 @@ export class Jupiter {
 
   get #getGeocentricCoords() {
     const originConverter = new OriginConverter(this.sun);
-    return originConverter.convertToGeocentricCoords(this.#calcHelioLons(), this.#calcHelioLats(), this.#calcHelioDists());
+    return originConverter.convertToGeocentricCoords(
+      this.#calcHelioLons(),
+      this.#calcHelioLats(),
+      this.#calcHelioDists(),
+    );
   }
 
   get getLongitudes() {
@@ -990,7 +896,6 @@ export class Jupiter {
   }
 }
 
-
 // 起潮力の計算
 export class TidalForce {
   constructor(celestialBody) {
@@ -1004,9 +909,11 @@ export class TidalForce {
   }
 
   #calcTidalForce(altitude, distance) {
-    const tidalForce = this.celestialBody.getCoefficientTidalForce / (distance * distance * distance);
-    const cos2A = Math.cos(altitude * Math.PI / 90);
-    const sin2A = Math.sin(altitude * Math.PI / 90);
+    const tidalForce =
+      this.celestialBody.getCoefficientTidalForce /
+      (distance * distance * distance);
+    const cos2A = Math.cos((altitude * Math.PI) / 90);
+    const sin2A = Math.sin((altitude * Math.PI) / 90);
     const vertical = (0.5 - 1.5 * cos2A) * tidalForce;
     const lateral = 1.5 * sin2A * tidalForce;
     return [vertical, lateral];
@@ -1022,10 +929,13 @@ export class TidalForce {
       verticals[i] = [];
       laterals[i] = [];
       for (let j = 0; j < HOUR_PER_DAY; j++) {
-        [verticals[i][j], laterals[i][j]] = this.#calcTidalForce(altitudes[i][j], distances[i][j]);
+        [verticals[i][j], laterals[i][j]] = this.#calcTidalForce(
+          altitudes[i][j],
+          distances[i][j],
+        );
       }
     }
-    return { "verticals": verticals, "laterals": laterals };
+    return { verticals: verticals, laterals: laterals };
   }
 
   calcVerticalTidalForces() {
@@ -1033,8 +943,8 @@ export class TidalForce {
   }
 
   calcLateralTidalForces() {
-    const laterals = this.#getTidalForces["laterals"]
-    const celestialBodyAzimuths = this.#getHorizontalCoords["azimuths"]
+    const laterals = this.#getTidalForces["laterals"];
+    const celestialBodyAzimuths = this.#getHorizontalCoords["azimuths"];
     const length = laterals.length;
     const strengths = [];
     const azimuths = [];
@@ -1051,10 +961,9 @@ export class TidalForce {
         }
       }
     }
-    return { "strengths": strengths, "azimuths": azimuths };
+    return { strengths: strengths, azimuths: azimuths };
   }
 }
-
 
 // 座標系の変換（黄道座標系→赤道座標系→地平座標系（水平座標系））
 export class CoordinatesConverter {
@@ -1153,7 +1062,6 @@ export class CoordinatesConverter {
     return { azimuths: azimuths, altitudes: altitudes };
   }
 }
-
 
 // 日心→地心の変換
 export class OriginConverter {

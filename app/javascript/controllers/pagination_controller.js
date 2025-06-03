@@ -1,9 +1,9 @@
-import { Controller } from "@hotwired/stimulus"
-import { Paginator } from "paginator"
+import { Controller } from "@hotwired/stimulus";
+import { Paginator } from "paginator";
 
 // Connects to data-controller="pagination"
 export default class extends Controller {
-  static targets = ["pagination"]
+  static targets = ["pagination"];
 
   connect() {
     this.showPagination();
@@ -17,21 +17,22 @@ export default class extends Controller {
   }
 
   makeNewPagination(paginationTarget, pageId) {
-    const firstDay = sessionStorage.getItem('firstDay');
-    const totalDay = sessionStorage.getItem('totalDay');
+    const firstDay = sessionStorage.getItem("firstDay");
+    const totalDay = sessionStorage.getItem("totalDay");
     const paginator = new Paginator(firstDay, totalDay, pageId);
     const startIndex = paginator.getStartIndex();
     const endIndex = paginator.getEndIndex();
     const pageTexts = paginator.generatePageTexts();
 
-    const ol = document.createElement('ol');
+    const ol = document.createElement("ol");
     for (let i = startIndex; i < endIndex + 1; i++) {
       const li = document.createElement("li");
       li.className = "page-item";
       li.id = i;
-      li.classList.add('cursor-pointer');
+      li.classList.add("cursor-pointer");
       li.textContent = pageTexts[i];
-      li.dataset.action = "click->page-switch#showPage click->pagination#showPagination";
+      li.dataset.action =
+        "click->page-switch#showPage click->pagination#showPagination";
       ol.appendChild(li);
     }
     paginationTarget.appendChild(ol);
