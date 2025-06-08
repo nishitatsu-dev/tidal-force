@@ -19,7 +19,7 @@
     <%= render "chart_horizontal" %>
   </div>
 
-  <div data-controller="page-switch">
+  <div data-controller="calc-results-page records-page">
     <div id="list" class="flex overflow-x-auto" style="width: 600px;height:800px;">
       <div id="calc_results" class="border overflow-x-auto" style="width: 500px;height:800px;">
         <%= render "calc_results" %>
@@ -37,8 +37,8 @@
     </div>
 
     <div id="pagination" class="border" style="width: 600px;height:150px;">
-        <%= form_with method: :get, data: { "page-switch-target" => "pageForm", "turbo-frame" => "records" } do |f| %>
-          <%= f.hidden_field :page, data: { "page-switch-target" => "pageField" } %>
+        <%= form_with method: :get, data: { "records-page-target" => "pageForm", "turbo-frame" => "records" } do |f| %>
+          <%= f.hidden_field :page, data: { "records-page-target" => "pageField" } %>
         <% end %>
         <%= render "pagination" %>
     </div>

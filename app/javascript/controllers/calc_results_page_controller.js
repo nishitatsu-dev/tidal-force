@@ -1,10 +1,9 @@
-import { Controller } from "@hotwired/stimulus";
+import { Controller } from "@hotwired/stimulus"
 import { CalcResultsPage } from "calc_results_page";
-import { RecordsPage } from "records_page";
 
-// Connects to data-controller="page-switch"
+// Connects to data-controller="calc-results-page"
 export default class extends Controller {
-  static targets = ["calcResultsTbody", "pageField", "pageForm"];
+  static targets = ["calcResultsTbody"];
 
   connect() {
     this.showPage();
@@ -12,12 +11,6 @@ export default class extends Controller {
 
   showPage(event) {
     const pageId = event ? Number(event.currentTarget.id) : 0;
-
-    const recordsPage = new RecordsPage(
-      this.pageFieldTarget,
-      this.pageFormTarget,
-    );
-    recordsPage.getRecords(pageId);
 
     this.removeOldDOM(this.calcResultsTbodyTarget);
     const calcResultsPage = new CalcResultsPage(this.calcResultsTbodyTarget);

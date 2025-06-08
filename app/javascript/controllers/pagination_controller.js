@@ -32,7 +32,7 @@ export default class extends Controller {
       li.classList.add("cursor-pointer");
       li.textContent = pageTexts[i];
       li.dataset.action =
-        "click->page-switch#showPage click->pagination#showPagination";
+        "click->calc-results-page#showPage click->records-page#showPage click->pagination#showPagination";
       ol.appendChild(li);
     }
     paginationTarget.appendChild(ol);
