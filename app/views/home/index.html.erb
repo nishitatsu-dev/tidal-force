@@ -1,13 +1,13 @@
 
-<%= form_with method: :get, html: { data: { turbo_frame: "chart_and_list" } } do |f| %>
+<%= form_with method: :get, html: { data: { turbo_frame: "chart_and_list", controller: "timezone" } } do |f| %>
   <%= f.label :location, "Location" %>
   <%= f.select :location, [ [ "根室", "NEMURO" ], [ "秋田", "AKITA" ], [ "東京", "TOKYO" ], [ "小笠原", "OGASAWARA" ], [ "高松", "TAKAMATSU" ], [ "鹿児島", "KAGOSHIMA" ], [ "那覇", "NAHA" ] ], { include_blank: true } %><br />
   <%= f.label :first_date, "Start" %>
   <%= f.date_field :first_date %><br />
   <%= f.label :last_date, "End" %>
   <%= f.date_field :last_date %><br />
-  <%= f.hidden_field :timezone %>
-  <%= f.submit "計算する", { id: "calc_button" } %>
+  <%= f.hidden_field :timezone, data: { "timezone-target" => "timezoneField" }  %>
+  <%= f.submit "計算する", { id: "calc_button", data: { action: "click->timezone#setValue" } } %>
 <% end %>
 
 <%= turbo_frame_tag "chart_and_list" do %>
