@@ -3,17 +3,26 @@ class ApplicationController < ActionController::Base
   allow_browser versions: :modern
 
   private
-  def permitted_params
-    params.permit(:timezone, :first_date, :page)
-  end
+  def set_session
+    session[:timezone] = if !params[:timezone].blank?
+      params[:timezone]
+    elsif !session[:timezone].blank?
+      session[:timezone]
+    else
+      "Asia/Tokyo"
+    end
 
-  def set_timezone_and_first_date
-    session[:timezone] = permitted_params[:timezone] || session[:timezone] || "Asia/Tokyo"
-    session[:first_date] = permitted_params[:first_date] || session[:first_date] || Date.today.strftime("%Y-%m-%d")
+    session[:first_date] = if !params[:first_date].blank?
+      params[:first_date]
+    elsif !session[:first_date].blank?
+      session[:first_date]
+    else
+      Date.today.strftime("%Y-%m-%d")
+    end
   end
 
   def get_page
-    permitted_params[:page].to_i || 0
+    params[:page].to_i || 0
   end
 
   def get_db_records(date)
