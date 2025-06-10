@@ -13,7 +13,7 @@ class RecordTitlesController < ApplicationController
 
   def create
     @record_title = RecordTitle.new(record_title_params)
-    @record_title.user_id = 1  # TODO - 仮設定。deviseから取得するよう変更する
+    @record_title.user_id = current_user.id
     if @record_title.save
       redirect_to @record_title, notice: "作成に成功しました。"
     else

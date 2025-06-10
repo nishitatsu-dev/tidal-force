@@ -28,7 +28,7 @@ class ApplicationController < ActionController::Base
   def get_db_records(date)
     date_hour_0000 = Time.zone.parse(date + " 00:00")
     date_hour_2300 = Time.zone.parse(date + " 23:00")
-    Record.where(recorded_at: (date_hour_0000..date_hour_2300))
+    Record.where(user_id: current_user.id).where(recorded_at: (date_hour_0000..date_hour_2300))
   end
 
   def make_hourly_records(date, db_records)
@@ -40,7 +40,7 @@ class ApplicationController < ActionController::Base
   end
 
   def make_record_titles
-    column_number_indexed_titles = RecordTitle.where(user_id: 1).index_by { |title| title.column_number }
+    column_number_indexed_titles = RecordTitle.where(user_id: current_user.id).index_by { |title| title.column_number }
     (0..5).map do |column_number|
       column_number_indexed_titles[column_number] || RecordTitle.new(column_number: column_number, title: "Column_#{column_number + 1}")
     end

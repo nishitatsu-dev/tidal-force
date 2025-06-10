@@ -23,7 +23,7 @@ export const LOCATION = {
   NAHA: { longitude: 127.667, latitude: 26.216 },
 };
 
-const first_form = document.forms[0];
+const first_form = document.getElementById("calc_conditions");
 const location = first_form.location;
 const first_date = first_form.first_date;
 const last_date = first_form.last_date;

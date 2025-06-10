@@ -16,7 +16,7 @@ class RecordsController < ApplicationController
 
   def create
     @record = Record.new(record_params)
-    @record.user_id = 1  # TODO - 仮設定。deviseから取得するよう変更する
+    @record.user_id = current_user.id
     if @record.save
       redirect_to @record, notice: "作成に成功しました。"
     else

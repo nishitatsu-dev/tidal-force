@@ -1,5 +1,5 @@
 
-<%= form_with method: :get, html: { data: { turbo_frame: "chart_and_list", controller: "timezone" } } do |f| %>
+<%= form_with method: :get, id: "calc_conditions", html: { data: { turbo_frame: "chart_and_list", controller: "timezone" } } do |f| %>
   <%= f.label :location, "Location" %>
   <%= f.select :location, [ [ "根室", "NEMURO" ], [ "秋田", "AKITA" ], [ "東京", "TOKYO" ], [ "小笠原", "OGASAWARA" ], [ "高松", "TAKAMATSU" ], [ "鹿児島", "KAGOSHIMA" ], [ "那覇", "NAHA" ] ], { include_blank: true } %><br />
   <%= f.label :first_date, "Start" %>
@@ -24,23 +24,27 @@
       <div id="calc_results" class="border overflow-x-auto" style="width: 500px;height:800px;">
         <%= render "calc_results" %>
       </div>
-      <div id="titles_and_records" class="border overflow-x-auto" style="width: 500px;height:800px;">
-        <p>【測定値の項目名】ログイン時のみ表示。編集可</p>
-        <div>time</div>
-        <%= render partial: "record_titles/record_title", collection: @record_titles %>
-        <div>memo</div>
-        <p>【測定値】ログイン時のみ表示。編集可</p>
-        <%= turbo_frame_tag "records" do %>
-          <%= render partial: "records/record", collection: @records %>
-        <% end %>
-      </div>
+      <% if user_signed_in? %>
+        <div id="titles_and_records" class="border overflow-x-auto" style="width: 500px;height:800px;">
+          <p>【測定値の項目名】ログイン時のみ表示。編集可</p>
+          <div>time</div>
+          <%= render partial: "record_titles/record_title", collection: @record_titles %>
+          <div>memo</div>
+          <p>【測定値】ログイン時のみ表示。編集可</p>
+          <%= turbo_frame_tag "records" do %>
+            <%= render partial: "records/record", collection: @records %>
+          <% end %>
+        </div>
+      <% end %>
     </div>
 
     <div id="pagination" class="border" style="width: 600px;height:150px;">
+      <% if user_signed_in? %>
         <%= form_with method: :get, data: { "records-page-target" => "pageForm", "turbo-frame" => "records" } do |f| %>
           <%= f.hidden_field :page, data: { "records-page-target" => "pageField" } %>
         <% end %>
-        <%= render "pagination" %>
+      <% end %>
+      <%= render "pagination" %>
     </div>
   </div>
 <% end %>
