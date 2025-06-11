@@ -43,7 +43,7 @@
     <div id="pagination" class="border" style="width: 600px;height:150px;">
       <% if user_signed_in? %>
         <%= form_with method: :get, data: { records_page_target: "pageForm", turbo_frame: "records" } do |f| %>
-          <%= f.hidden_field :page, data: { records_page_target: "pageField" } %>
+          <%= f.hidden_field :page_id, data: { records_page_target: "pageField" } %>
         <% end %>
       <% end %>
       <%= render "pagination" %>
