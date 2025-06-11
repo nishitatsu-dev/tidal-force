@@ -23,47 +23,6 @@ export const LOCATION = {
   NAHA: { longitude: 127.667, latitude: 26.216 },
 };
 
-const first_form = document.getElementById("calc_conditions");
-const location = first_form.location;
-const first_date = first_form.first_date;
-const last_date = first_form.last_date;
-const calcButton = first_form.calc_button;
-
-calcButton.addEventListener("click", () => {
-  const main = new Main(first_date.value, last_date.value, location.value);
-  const moonTidalForces = main.getMoonTidalForces;
-  const sunTidalForces = main.getSunTidalForces;
-  const jupiterDistances = main.getJupiterDistances;
-
-  const xAxisData = main.getDateTimes["xAxisData"];
-  const ISODateTimes = main.getDateTimes["ISODateTimes"];
-  const totalDay = main.getDateTimes["totalDay"];
-
-  const moonVerticals = moonTidalForces.verticals.flat();
-  const sunVerticals = sunTidalForces.verticals.flat();
-  const moonAndSunVerticals = moonVerticals.map((v, i) => v + sunVerticals[i]);
-
-  const moonLateralStrengths = moonTidalForces.laterals.strengths.flat();
-  const moonLateralAzimuths = moonTidalForces.laterals.azimuths.flat();
-  const sunLateralStrengths = sunTidalForces.laterals.strengths.flat();
-  const sunLateralAzimuths = sunTidalForces.laterals.azimuths.flat();
-
-  sessionStorage.setItem("xAxisData", xAxisData);
-  sessionStorage.setItem("ISODateTimes", ISODateTimes);
-  sessionStorage.setItem("firstDay", first_date.value);
-  sessionStorage.setItem("totalDay", totalDay);
-
-  sessionStorage.setItem("moonVerticals", moonVerticals);
-  sessionStorage.setItem("sunVerticals", sunVerticals);
-  sessionStorage.setItem("moonAndSunVerticals", moonAndSunVerticals);
-  sessionStorage.setItem("jupiterDistances", jupiterDistances.flat());
-
-  sessionStorage.setItem("moonLateralStrengths", moonLateralStrengths);
-  sessionStorage.setItem("moonLateralAzimuths", moonLateralAzimuths);
-  sessionStorage.setItem("sunLateralStrengths", sunLateralStrengths);
-  sessionStorage.setItem("sunLateralAzimuths", sunLateralAzimuths);
-});
-
 // 起潮力・惑星距離計算の最表層
 export class Main {
   constructor(first_date, last_date, location) {
