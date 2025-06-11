@@ -8,7 +8,7 @@
   <%= f.date_field :first_date, data: { session_storage_target: "firstDateField" } %><br />
   <%= f.label :last_date, "End" %>
   <%= f.date_field :last_date, data: { session_storage_target: "lastDateField" } %><br />
-  <%= f.hidden_field :timezone, data: { "timezone-target" => "timezoneField" }  %>
+  <%= f.hidden_field :timezone, data: { timezone_target: "timezoneField" } %>
   <%= f.submit "計算する", { id: "calc_button", data: { action: "click->timezone#setValue click->session-storage#setItem" } } %>
 <% end %>
 
@@ -42,8 +42,8 @@
 
     <div id="pagination" class="border" style="width: 600px;height:150px;">
       <% if user_signed_in? %>
-        <%= form_with method: :get, data: { "records-page-target" => "pageForm", "turbo-frame" => "records" } do |f| %>
-          <%= f.hidden_field :page, data: { "records-page-target" => "pageField" } %>
+        <%= form_with method: :get, data: { records_page_target: "pageForm", turbo_frame: "records" } do |f| %>
+          <%= f.hidden_field :page, data: { records_page_target: "pageField" } %>
         <% end %>
       <% end %>
       <%= render "pagination" %>
