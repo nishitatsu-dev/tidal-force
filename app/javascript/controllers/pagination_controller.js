@@ -12,7 +12,7 @@ export default class extends Controller {
   showPagination(event) {
     const pageId = event ? Number(event.currentTarget.id) : 0;
 
-    this.removeOldDOM(this.paginationTarget);
+    this.#removeOldDOM(this.paginationTarget);
     this.makeNewPagination(this.paginationTarget, pageId);
   }
 
@@ -38,7 +38,7 @@ export default class extends Controller {
     paginationTarget.appendChild(ol);
   }
 
-  removeOldDOM(thisTarget) {
+  #removeOldDOM(thisTarget) {
     const parentDOM = thisTarget;
     while (parentDOM.firstChild) {
       parentDOM.removeChild(parentDOM.firstChild);

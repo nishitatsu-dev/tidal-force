@@ -12,12 +12,12 @@ export default class extends Controller {
   showPage(event) {
     const pageId = event ? Number(event.currentTarget.id) : 0;
 
-    this.removeOldDOM(this.calcResultsTbodyTarget);
+    this.#removeOldDOM(this.calcResultsTbodyTarget);
     const calcResultsPage = new CalcResultsPage(this.calcResultsTbodyTarget);
     calcResultsPage.makeNewTable(pageId);
   }
 
-  removeOldDOM(thisTarget) {
+  #removeOldDOM(thisTarget) {
     const parentDOM = thisTarget;
     while (parentDOM.firstChild) {
       parentDOM.removeChild(parentDOM.firstChild);
