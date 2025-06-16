@@ -1,5 +1,5 @@
 
-<%= form_with method: :get, html: { data: { turbo_frame: "chart_and_list", controller: "timezone session-storage" } } do |f| %>
+<%= form_with method: :get, data: { turbo_frame: "chart_and_list", controller: "timezone session-storage" } do |f| %>
   <%= f.label :location, "Location" %>
   <%= f.select :location,
         [ [ "根室", "NEMURO" ], [ "秋田", "AKITA" ], [ "東京", "TOKYO" ], [ "小笠原", "OGASAWARA" ], [ "高松", "TAKAMATSU" ], [ "鹿児島", "KAGOSHIMA" ], [ "那覇", "NAHA" ] ],
