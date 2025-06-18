@@ -8,7 +8,7 @@ class User < ApplicationRecord
 
   has_many :sns_credentials, dependent: :destroy
   has_many :records, dependent: :destroy
-  has_one :record_title, dependent: :destroy
+  has_many :record_titles, dependent: :destroy
 
   def self.from_omniauth(access_token)
     data = access_token.info
