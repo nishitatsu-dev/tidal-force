@@ -4,7 +4,6 @@ Rails.application.routes.draw do
   get "supplement/index"
   resources :titles
   resources :record_titles
-  # resources :titles, only: [ :index, :create, :update, :destroy ]
   resources :records
   devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
   # devise_scope :user do
