@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_09_150413) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_17_104657) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -36,6 +36,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_09_150413) do
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
     t.index ["user_id"], name: "index_records_on_user_id"
+  end
+
+  create_table "sns_credentials", force: :cascade do |t|
+    t.string "provider"
+    t.string "uid"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_sns_credentials_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -66,4 +75,5 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_09_150413) do
 
   add_foreign_key "record_titles", "users"
   add_foreign_key "records", "users"
+  add_foreign_key "sns_credentials", "users"
 end
