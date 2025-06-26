@@ -1,16 +1,18 @@
-
-<%= form_with method: :get, data: { turbo_frame: "chart_and_list", controller: "timezone session-storage" } do |f| %>
-  <%= f.label :location, "Location" %>
-  <%= f.select :location,
-        [ [ "根室", "NEMURO" ], [ "秋田", "AKITA" ], [ "東京", "TOKYO" ], [ "小笠原", "OGASAWARA" ], [ "高松", "TAKAMATSU" ], [ "鹿児島", "KAGOSHIMA" ], [ "那覇", "NAHA" ] ],
-        { include_blank: true }, data: { session_storage_target: "locationSelect" } %><br />
-  <%= f.label :first_date, "Start" %>
-  <%= f.date_field :first_date, data: { session_storage_target: "firstDateField" } %><br />
-  <%= f.label :last_date, "End" %>
-  <%= f.date_field :last_date, data: { session_storage_target: "lastDateField" } %><br />
-  <%= f.hidden_field :timezone, data: { timezone_target: "timezoneField" } %>
-  <%= f.submit "計算する", { id: "calc_button", data: { action: "click->timezone#setValue click->session-storage#setItem" } } %>
-<% end %>
+<%= render "layouts/outline" %>
+<div class="border">
+  <%= form_with method: :get, data: { turbo_frame: "chart_and_list", controller: "timezone session-storage" } do |f| %>
+    <%= f.label :location, "Location" %>
+    <%= f.select :location,
+          [ [ "根室", "NEMURO" ], [ "秋田", "AKITA" ], [ "東京", "TOKYO" ], [ "小笠原", "OGASAWARA" ], [ "高松", "TAKAMATSU" ], [ "鹿児島", "KAGOSHIMA" ], [ "那覇", "NAHA" ] ],
+          { include_blank: true }, data: { session_storage_target: "locationSelect" } %><br />
+    <%= f.label :first_date, "Start" %>
+    <%= f.date_field :first_date, data: { session_storage_target: "firstDateField" } %><br />
+    <%= f.label :last_date, "End" %>
+    <%= f.date_field :last_date, data: { session_storage_target: "lastDateField" } %><br />
+    <%= f.hidden_field :timezone, data: { timezone_target: "timezoneField" } %>
+    <%= f.submit "計算する", { id: "calc_button", data: { action: "click->timezone#setValue click->session-storage#setItem" } } %>
+  <% end %>
+</div>
 
 <%= turbo_frame_tag "chart_and_list" do %>
   <div id="chart_vertical" style="width: 600px;height:400px;">
@@ -50,3 +52,4 @@
     </div>
   </div>
 <% end %>
+<%= render "layouts/terms_and_privacy" %>
