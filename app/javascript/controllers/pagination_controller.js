@@ -25,6 +25,7 @@ export default class extends Controller {
     const pageTexts = paginator.generatePageTexts();
 
     const ol = document.createElement("ol");
+    ol.className = "flex";
     for (let i = startIndex; i < endIndex + 1; i++) {
       const li = document.createElement("li");
       li.className = "page-item";

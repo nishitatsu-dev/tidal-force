@@ -1,5 +1,5 @@
 <%= turbo_frame_tag "record_#{extract_date_hour(record)}" do %>
-  <div class="row py-2 border-top">
+  <div class="flex row py-2 border-top">
     <div class="col-4 my-auto">
       <%= record.recorded_at.in_time_zone(session[:timezone]) %>
     </div>

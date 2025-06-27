@@ -1,5 +1,9 @@
+<h1 class="font-bold">Tidal Force +</h1>
+
 <%= render "layouts/outline" %>
-<div class="border">
+
+<section class="border">
+  <h2 class="font-bold">条件</h2>
   <%= form_with method: :get, data: { turbo_frame: "chart_and_list", controller: "timezone session-storage" } do |f| %>
     <%= f.label :location, "Location" %>
     <%= f.select :location,
@@ -12,37 +16,47 @@
     <%= f.hidden_field :timezone, data: { timezone_target: "timezoneField" } %>
     <%= f.submit "計算する", { id: "calc_button", data: { action: "click->timezone#setValue click->session-storage#setItem" } } %>
   <% end %>
-</div>
+</section>
 
 <%= turbo_frame_tag "chart_and_list" do %>
-  <div id="chart_vertical" style="width: 600px;height:400px;">
-    <%= render "chart_vertical" %>
-  </div>
+  <section>
+    <h2 class="font-bold">垂直方向成分</h2>
+    <div id="chart_vertical" class="h-96 w-full">
+      <%= render "chart_vertical" %>
+    </div>
+  </section>
 
-  <div id="chart_horizontal" style="width: 600px;height:400px;">
-    <%= render "chart_horizontal" %>
-  </div>
+  <section>
+    <h2 class="font-bold">水平方向成分</h2>
+    <div id="chart_horizontal" class="h-96 w-full">
+      <%= render "chart_horizontal" %>
+    </div>
+  </section>
 
   <div data-controller="calc-results-page records-page">
-    <div id="list" class="flex overflow-x-auto" style="width: 600px;height:800px;">
-      <div id="calc_results" class="border overflow-x-auto" style="width: 500px;height:800px;">
+    <div class="flex overflow-x-auto" style="height:800px;">
+      <section class="border flex-1 overflow-x-auto" style="height:800px;">
+        <h2 class="font-bold">計算結果</h2>
         <%= render "calc_results" %>
-      </div>
+      </section>
       <% if user_signed_in? %>
-        <div id="titles_and_records" class="border overflow-x-auto" style="width: 500px;height:800px;">
-          <p>【測定値の項目名】ログイン時のみ表示。編集可</p>
-          <div>time</div>
-          <%= render partial: "record_titles/record_title", collection: @record_titles %>
-          <div>memo</div>
-          <p>【測定値】ログイン時のみ表示。編集可</p>
-          <%= turbo_frame_tag "records" do %>
-            <%= render partial: "records/record", collection: @records %>
-          <% end %>
-        </div>
+        <section class="border flex-1 overflow-x-auto" style="height:800px;">
+          <h2 class="font-bold">測定結果</h2>
+          <div class="flex">
+            <div>time</div>
+            <%= render partial: "record_titles/record_title", collection: @record_titles %>
+            <div>memo</div>
+          </div>
+          <div>
+            <%= turbo_frame_tag "records" do %>
+              <%= render partial: "records/record", collection: @records %>
+            <% end %>
+          </div>
+        </section>
       <% end %>
     </div>
 
-    <div id="pagination" class="border" style="width: 600px;height:150px;">
+    <div class="h-10 border">
       <% if user_signed_in? %>
         <%= form_with method: :get, data: { records_page_target: "pageForm", turbo_frame: "records" } do |f| %>
           <%= f.hidden_field :page_id, data: { records_page_target: "pageField" } %>
@@ -52,4 +66,5 @@
     </div>
   </div>
 <% end %>
+
 <%= render "layouts/terms_and_privacy" %>
