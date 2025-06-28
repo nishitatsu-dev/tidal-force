@@ -7,12 +7,18 @@ export class Paginator {
     this.currentIndex = currentIndex;
   }
 
-  generatePageTexts() {
-    const pageTexts = [];
+  getDatesAndDays() {
+    const dates = [];
+    const days = [];
+    const firstDay = new Date(this.firstDay);
+    const firstDate = firstDay.getDate();
     for (let i = 0; i < this.totalDay; i++) {
-      pageTexts.push(`${i + 1} / ${this.totalDay}`);
+      const date = new Date(this.firstDay);
+      date.setDate(firstDate + i);
+      dates.push(date.getDate());
+      days.push(date.getDay());
     }
-    return pageTexts;
+    return {dates, days};
   }
 
   getStartIndex() {
