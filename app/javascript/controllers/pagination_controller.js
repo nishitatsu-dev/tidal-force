@@ -13,10 +13,17 @@ export default class extends Controller {
     const pageId = event ? Number(event.currentTarget.id) : 0;
 
     this.#removeOldDOM(this.paginationTarget);
-    this.makeNewPagination(this.paginationTarget, pageId);
+    this.#makeNewPagination(this.paginationTarget, pageId);
   }
 
-  makeNewPagination(paginationTarget, pageId) {
+  #removeOldDOM(thisTarget) {
+    const parentDOM = thisTarget;
+    while (parentDOM.firstChild) {
+      parentDOM.removeChild(parentDOM.firstChild);
+    }
+  }
+
+  #makeNewPagination(paginationTarget, pageId) {
     const firstDay = sessionStorage.getItem("firstDay");
     const totalDay = sessionStorage.getItem("totalDay");
     const paginator = new Paginator(firstDay, totalDay, pageId);
