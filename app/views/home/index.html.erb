@@ -56,7 +56,7 @@
       <% end %>
     </div>
 
-    <div class="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
+    <div class="flex mx-auto items-center justify-center border-t border-gray-200 bg-white w-76 py-3">
       <% if user_signed_in? %>
         <%= form_with method: :get, data: { records_page_target: "pageForm", turbo_frame: "records" } do |f| %>
           <%= f.hidden_field :page_id, data: { records_page_target: "pageField" } %>
