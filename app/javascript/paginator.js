@@ -1,4 +1,4 @@
-const DISPLAY_LENGTH = 19;
+const DISPLAY_LENGTH = 17;
 
 export class Paginator {
   constructor(firstDay, totalDay, currentIndex) {

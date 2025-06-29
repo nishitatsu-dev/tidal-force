@@ -34,8 +34,10 @@ export default class extends Controller {
 
     const ol = document.createElement("ol");
     ol.className = "flex flex-wrap gap-1";
-    const jumpFirstButton = this.#makeButton(0, "|«");
+    const jumpFirstButton = this.#makeButton(0, "⇤");
     ol.appendChild(jumpFirstButton);
+    const previousButton = this.#makeButton(Math.max(0, pageId - 1), "←");
+    ol.appendChild(previousButton);
     for (let i = startIndex; i < endIndex + 1; i++) {
       const li = document.createElement("li");
       const color = this.#getColor(i, pageId, pageDays);
@@ -46,7 +48,9 @@ export default class extends Controller {
         "click->calc-results-page#showPage click->records-page#showPage click->pagination#showPagination";
       ol.appendChild(li);
     }
-    const jumpLastButton = this.#makeButton(totalDay - 1, "»|");
+    const nextButton = this.#makeButton(Math.min(totalDay - 1, pageId + 1), "→");
+    ol.appendChild(nextButton);
+    const jumpLastButton = this.#makeButton(totalDay - 1, "⇥");
     ol.appendChild(jumpLastButton);
     paginationTarget.appendChild(ol);
   }
