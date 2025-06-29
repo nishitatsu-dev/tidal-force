@@ -33,7 +33,7 @@
     </div>
   </section>
 
-  <div data-controller="calc-results-page records-page">
+  <%= tag.div data: { controller: "calc-results-page #{ user_signed_in? ? "records-page" : "" }" } do %>
     <div class="flex overflow-x-auto" style="height:800px;">
       <section class="border flex-1 overflow-x-auto" style="height:800px;">
         <h2 class="font-bold">計算結果</h2>
@@ -64,7 +64,7 @@
       <% end %>
       <%= render "pagination" %>
     </div>
-  </div>
+  <% end %>
 <% end %>
 
 <%= render "layouts/terms_and_privacy" %>
