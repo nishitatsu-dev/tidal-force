@@ -34,13 +34,13 @@
   </section>
 
   <%= tag.div data: { controller: "calc-results-page #{ user_signed_in? ? "records-page" : "" }" } do %>
-    <div class="flex overflow-x-auto" style="height:800px;">
-      <section class="border flex-1 overflow-x-auto" style="height:800px;">
+    <div class="flex overflow-x-auto">
+      <section class="border flex-1 overflow-x-auto">
         <h2 class="font-bold">計算結果</h2>
         <%= render "calc_results" %>
       </section>
       <% if user_signed_in? %>
-        <section class="border flex-1 overflow-x-auto" style="height:800px;">
+        <section class="border flex-1 overflow-x-auto">
           <h2 class="font-bold">測定結果</h2>
           <div class="flex">
             <div>time</div>

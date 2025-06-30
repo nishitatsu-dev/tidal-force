@@ -1,5 +1,6 @@
 import { Controller } from "@hotwired/stimulus"
 import * as tidalForcePlus from "tidal_force_plus";
+import calcResultsFormatter from "calc_results_formatter";
 
 // Connects to data-controller="session-storage"
 export default class extends Controller {
@@ -40,14 +41,15 @@ export default class extends Controller {
     const sunLateralStrengths = sunTidalForces.laterals.strengths.flat();
     const sunLateralAzimuths = sunTidalForces.laterals.azimuths.flat();
 
-    sessionStorage.setItem("moonVerticals", moonVerticals);
-    sessionStorage.setItem("sunVerticals", sunVerticals);
-    sessionStorage.setItem("moonAndSunVerticals", moonAndSunVerticals);
-    sessionStorage.setItem("jupiterDistances", jupiterDistances.flat());
+    const formatter = new calcResultsFormatter(6, 4);
+    sessionStorage.setItem("moonVerticals", formatter.format(moonVerticals));
+    sessionStorage.setItem("sunVerticals", formatter.format(sunVerticals));
+    sessionStorage.setItem("moonAndSunVerticals", formatter.format(moonAndSunVerticals));
+    sessionStorage.setItem("jupiterDistances", formatter.formatPrecision(jupiterDistances.flat()));
 
-    sessionStorage.setItem("moonLateralStrengths", moonLateralStrengths);
-    sessionStorage.setItem("moonLateralAzimuths", moonLateralAzimuths);
-    sessionStorage.setItem("sunLateralStrengths", sunLateralStrengths);
-    sessionStorage.setItem("sunLateralAzimuths", sunLateralAzimuths);
+    sessionStorage.setItem("moonLateralStrengths", formatter.format(moonLateralStrengths));
+    sessionStorage.setItem("moonLateralAzimuths", formatter.formatPrecision(moonLateralAzimuths));
+    sessionStorage.setItem("sunLateralStrengths", formatter.format(sunLateralStrengths));
+    sessionStorage.setItem("sunLateralAzimuths", formatter.formatPrecision(sunLateralAzimuths));
   }
 }
