@@ -41,7 +41,7 @@ export default class extends Controller {
     for (let i = startIndex; i < endIndex + 1; i++) {
       const li = document.createElement("li");
       const color = this.#getColor(i, pageId, pageDays);
-      li.className = `page-item relative inline-flex items-center justify-center rounded-md w-10 h-10 text-sm font-semibold ${color} ring-1 ring-gray-300 ring-inset focus:z-20 focus:outline-offset-0 cursor-pointer`;
+      li.className = `page-item relative inline-flex items-center justify-center rounded-md w-10 h-10 text-sm font-semibold ${color} ring-1 ring-inset focus:z-20 focus:outline-offset-0 cursor-pointer`;
       li.id = i;
       li.textContent = pageDates[i];
       li.dataset.action =
@@ -56,10 +56,10 @@ export default class extends Controller {
   }
 
   #getColor(i, pageId, pageDays) {
-    const currentColor = "text-gray-100 bg-indigo-600";
-    const sundayColor = "text-gray-100 bg-red-500 hover:bg-red-300";
-    const saturdayColor = "text-gray-100 bg-blue-500 hover:bg-blue-300";
-    const weekdayColor = "text-gray-900 hover:bg-gray-300";
+    const currentColor = "text-gray-100 ring-gray-300 bg-indigo-600";
+    const sundayColor = "text-red-600 ring-red-600 hover:bg-red-50";
+    const saturdayColor = "text-blue-600 ring-blue-600 hover:bg-blue-50";
+    const weekdayColor = "text-gray-900 ring-gray-300 hover:bg-gray-50";
     let color = weekdayColor;
     if (i === pageId) {
       color = currentColor;
