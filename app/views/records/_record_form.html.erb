@@ -1,19 +1,21 @@
-<%= turbo_frame_tag "record_#{extract_date_hour(record)}" do %>
-  <div class="row py-2 border-top">
-    <div class="col-4 my-auto">
-      <%= record.recorded_at.in_time_zone(session[:timezone]) %>
-    </div>
-    <%= form_with model: record do |f| %>
-      <%= f.hidden_field :recorded_at %>
-      <%= f.text_field :column_0 %>
-      <%= f.text_field :column_1 %>
-      <%= f.text_field :column_2 %>
-      <%= f.text_field :column_3 %>
-      <%= f.text_field :column_4 %>
-      <%= f.text_field :column_5 %>
-      <%= f.text_area :memo %>
-      <%= f.submit "更新" %>
-    <% end %>
-    <%= link_to "キャンセル", record %>
+<%= turbo_frame_tag "record_#{extract_date_hour(record)}", class: "flex gap-1 place-content-start h-10 border-t border-t-gray-200" do %>
+  <div class="self-center text-center w-18 flex-none">
+    <%= record.recorded_at.in_time_zone(session[:timezone]).strftime("%H:%M") %>
   </div>
+  <%= form_with model: record, class: "flex gap-1 flex-none" do |f| %>
+    <div class="grid grid-cols-6 grid-rows-1 auto-rows-max gap-1 content-start items-center flex-none basis-120">
+      <%= f.text_field :column_0, class: "rounded-md border ring-gray-300 cursor-pointer" %>
+      <%= f.text_field :column_1, class: "rounded-md border ring-gray-300 cursor-pointer" %>
+      <%= f.text_field :column_2, class: "rounded-md border ring-gray-300 cursor-pointer" %>
+      <%= f.text_field :column_3, class: "rounded-md border ring-gray-300 cursor-pointer" %>
+      <%= f.text_field :column_4, class: "rounded-md border ring-gray-300 cursor-pointer" %>
+      <%= f.text_field :column_5, class: "rounded-md border ring-gray-300 cursor-pointer" %>
+    </div>
+    <%= f.text_area :memo, class: "text-wrap w-memo h-10 overflow-y-auto rounded-md border ring-gray-300 cursor-pointer" %>
+    <%= f.hidden_field :recorded_at %>
+    <div class="flex gap-2 justify-center items-center flex-none">
+      <%= f.submit "更新", class: "self-center cursor-pointer", class: "btn-record-primary" %>
+      <%= link_to "キャンセル", record, class: "self-center cursor-pointer" %>
+    </div>
+  <% end %>
 <% end %>

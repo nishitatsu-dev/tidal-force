@@ -1,12 +1,12 @@
 <%= turbo_frame_tag "record_title_#{record_title.column_number}" do %>
-  <div class="row py-2 border-top">
-    <div class="col-4 my-auto">
-      <%= form_with model: record_title do |f| %>
-        <%= f.hidden_field :column_number %>
-        <%= f.text_area :title %>
-        <%= f.submit "更新" %>
-      <% end %>
+  <%= form_with model: record_title, class: "grid grid-rows-2 h-20 w-20 place-content-start border-r border-gray-300" do |f| %>
+    <div class="grid grid-rows-2 h-10 place-content-start">
+      <%= f.submit "更新", class: "text-left btn-record-primary" %>
       <%= link_to "キャンセル", record_title %>
     </div>
-  </div>
+    <div class="text-left text-wrap h-10 overflow-x-auto overflow-y-auto">
+      <%= f.text_area :title %>
+    </div>
+      <%= f.hidden_field :column_number %>
+  <% end %>
 <% end %>
