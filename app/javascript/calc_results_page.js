@@ -36,7 +36,9 @@ export class CalcResultsPage {
 
     for (let row = 0; row < HOUR_PER_DAY; row++) {
       const tr = document.createElement("tr");
+      tr.className = "border-t border-gray-200";
       const tdTime = document.createElement("td");
+      tdTime.className = "h-10";
       tdTime.textContent = times[row];
       tr.appendChild(tdTime);
       for (let col = 0; col < 8; col++) {
