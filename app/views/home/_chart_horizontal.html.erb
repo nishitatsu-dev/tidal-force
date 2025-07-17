@@ -19,7 +19,7 @@
     }
   },
   legend: {
-    data: ['Moon', 'Moon (Azimuth)', 'Sun', 'Sun (Azimuth)'],
+    data: ['Moon', 'Sun', 'Moon (Azimuth)', 'Sun (Azimuth)'],
   },
   toolbox: {
     feature: {
@@ -82,49 +82,49 @@
   ],
   yAxis: [
     {
+      name: 'Tidal Force [µm/s^2]',
+      type: 'value',
+      max: 2,
+      min: 0
+    },
+    {
+      gridIndex: 1,
       name: 'Azimuth [deg]',
       type: 'value',
       max: 360,
       min: 0,
       axisTick: { customValues: [90, 180, 270, 360] },
       axisLabel: { customValues: [0, 90, 180, 270, 360] }
-    },
-    {
-      gridIndex: 1,
-      name: 'Tidal Force [µm/s^2]',
-      type: 'value',
-      max: 2,
-      min: 0
     }
   ],
   series: [
     {
-      name: 'Moon (Azimuth)',
-      type: 'line',
-      color: 'rgb(240, 162, 85)',
-      data: moonLateralAzimuths
-    },
-    {
-      name: 'Sun (Azimuth)',
-      type: 'line',
-      color: 'rgb(164, 62, 177)',
-      data: sunLateralAzimuths
-    },
-    {
       name: 'Moon',
       type: 'line',
-      xAxisIndex: 1,
-      yAxisIndex: 1,
       color: 'rgb(255, 191, 0)',
       data: moonLateralStrengths
     },
     {
       name: 'Sun',
       type: 'line',
-      xAxisIndex: 1,
-      yAxisIndex: 1,
       color: 'rgb(250, 0, 135)',
       data: sunLateralStrengths
+    },
+    {
+      name: 'Moon (Azimuth)',
+      type: 'line',
+      xAxisIndex: 1,
+      yAxisIndex: 1,
+      color: 'rgb(240, 162, 85)',
+      data: moonLateralAzimuths
+    },
+    {
+      name: 'Sun (Azimuth)',
+      type: 'line',
+      xAxisIndex: 1,
+      yAxisIndex: 1,
+      color: 'rgb(164, 62, 177)',
+      data: sunLateralAzimuths
     }
   ]
 };
