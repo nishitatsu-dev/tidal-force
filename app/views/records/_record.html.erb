@@ -24,7 +24,7 @@
       </div>
     </div>
     <div class="text-wrap w-memo h-10 overflow-y-auto">
-      <%= record.memo %>
+      <%= display_line_breaks record.memo %>
     </div>
     <% if record.id.nil? %>
       <div class="flex justify-center items-center text-center sticky top-0 right-0 flex-none">
