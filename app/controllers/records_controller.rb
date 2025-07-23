@@ -11,6 +11,7 @@ class RecordsController < ApplicationController
   end
 
   def new
+    @record_titles = make_record_titles
     @record = Record.new(recorded_at: params[:recorded_at])
   end
 
@@ -25,6 +26,7 @@ class RecordsController < ApplicationController
   end
 
   def edit
+    @record_titles = make_record_titles
     @record = Record.find(params[:id])
   end
 
