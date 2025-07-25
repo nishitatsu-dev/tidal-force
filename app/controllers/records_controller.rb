@@ -1,9 +1,6 @@
 class RecordsController < ApplicationController
   def index
-    Time.use_zone(session[:timezone]) do
-      db_records = get_db_records(params[:date])
-      @records = make_hourly_records(params[:date], db_records)
-    end
+    @records = make_one_day_records
   end
 
   def show

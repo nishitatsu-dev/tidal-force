@@ -17,6 +17,14 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def make_one_day_records
+    Time.use_zone(session[:timezone]) do
+      date = Date.parse(session[:first_date]).advance(days: session[:page_id]).strftime("%Y-%m-%d")
+      db_records = get_db_records(date)
+      make_hourly_records(date, db_records)
+    end
+  end
+
   def make_record_titles
     column_number_indexed_titles = current_user.record_titles.index_by { |title| title.column_number }
     (0..5).map do |column_number|

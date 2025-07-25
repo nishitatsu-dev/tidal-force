@@ -3,11 +3,7 @@ class HomeController < ApplicationController
     if user_signed_in?
       @record_titles = make_record_titles
       set_session
-      Time.use_zone(session[:timezone]) do
-        date = Date.parse(session[:first_date]).advance(days: get_page_id).strftime("%Y-%m-%d")
-        db_records = get_db_records(date)
-        @records = make_hourly_records(date, db_records)
-      end
+      @records = make_one_day_records
     end
   end
 
@@ -28,9 +24,7 @@ class HomeController < ApplicationController
     else
       Date.today.strftime("%Y-%m-%d")
     end
-  end
 
-  def get_page_id
-    params[:page_id].to_i || 0
+    session[:page_id] = params[:page_id].to_i || 0
   end
 end
