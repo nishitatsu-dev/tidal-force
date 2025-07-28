@@ -12,11 +12,11 @@ export default class extends Controller {
     const lastDate = this.lastDateFieldTarget.value;
     const main = new tidalForcePlus.Main(firstDate, lastDate, location);
 
-    this.#setBasicParams(main, firstDate);
+    this.#setBasicParams(main, firstDate, lastDate);
     this.#setTidalForcePlus(main);
   }
 
-  #setBasicParams(main, firstDate) {
+  #setBasicParams(main, firstDate, lastDate) {
     const xAxisData = main.getDateTimes["xAxisData"];
     const ISODateTimes = main.getDateTimes["ISODateTimes"];
     const totalDay = main.getDateTimes["totalDay"];
@@ -24,6 +24,7 @@ export default class extends Controller {
     sessionStorage.setItem("xAxisData", xAxisData);
     sessionStorage.setItem("ISODateTimes", ISODateTimes);
     sessionStorage.setItem("firstDay", firstDate);
+    sessionStorage.setItem("lastDay", lastDate);
     sessionStorage.setItem("totalDay", totalDay);
   }
 
