@@ -3,6 +3,7 @@
 @layer components {
   .w-memo {
     width: 55svw;
+    max-width: 18rem;
   }
 
   .btn-record-primary {
