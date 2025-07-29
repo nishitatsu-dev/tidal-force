@@ -1,82 +1,86 @@
-<h1>Tidal Force +</h1>
+<div class="flex flex-col gap-3">
+  <h1>Tidal Force +</h1>
 
-<%= render "layouts/outline" %>
+  <%= render "layouts/outline" %>
 
-<section class="border">
-  <h2>条件</h2>
-  <%= form_with method: :get, data: { turbo_frame: "chart_and_list", controller: "timezone session-storage" } do |f| %>
-    <%= f.label :location, "Location" %>
-    <%= f.select :location,
-          [ [ "根室", "NEMURO" ], [ "秋田", "AKITA" ], [ "東京", "TOKYO" ], [ "小笠原", "OGASAWARA" ], [ "高松", "TAKAMATSU" ], [ "鹿児島", "KAGOSHIMA" ], [ "那覇", "NAHA" ] ],
-          { include_blank: true }, data: { session_storage_target: "locationSelect" } %><br />
-    <%= f.label :first_date, "Start" %>
-    <%= f.date_field :first_date, data: { session_storage_target: "firstDateField" } %><br />
-    <%= f.label :last_date, "End" %>
-    <%= f.date_field :last_date, data: { session_storage_target: "lastDateField" } %><br />
-    <%= f.hidden_field :timezone, data: { timezone_target: "timezoneField" } %>
-    <%= f.submit "計算する", { id: "calc_button", data: { action: "click->timezone#setValue click->session-storage#setItem" } } %>
-  <% end %>
-</section>
-
-<%= turbo_frame_tag "chart_and_list" do %>
   <section>
-    <h2>垂直方向成分</h2>
-    <div id="chart_vertical" class="h-96 w-full">
-      <%= render "chart_vertical" %>
+    <div class="border">
+      <h2>条件</h2>
+      <%= form_with method: :get, data: { turbo_frame: "chart_and_list", controller: "timezone session-storage" } do |f| %>
+        <%= f.label :location, "Location" %>
+        <%= f.select :location,
+              [ [ "根室", "NEMURO" ], [ "秋田", "AKITA" ], [ "東京", "TOKYO" ], [ "小笠原", "OGASAWARA" ], [ "高松", "TAKAMATSU" ], [ "鹿児島", "KAGOSHIMA" ], [ "那覇", "NAHA" ] ],
+              { include_blank: true }, data: { session_storage_target: "locationSelect" } %><br />
+        <%= f.label :first_date, "Start" %>
+        <%= f.date_field :first_date, data: { session_storage_target: "firstDateField" } %><br />
+        <%= f.label :last_date, "End" %>
+        <%= f.date_field :last_date, data: { session_storage_target: "lastDateField" } %><br />
+        <%= f.hidden_field :timezone, data: { timezone_target: "timezoneField" } %>
+        <%= f.submit "計算する", { id: "calc_button", data: { action: "click->timezone#setValue click->session-storage#setItem" } } %>
+      <% end %>
     </div>
   </section>
 
-  <section>
-    <h2>水平方向成分</h2>
-    <div id="chart_horizontal" class="h-96 w-full">
-      <%= render "chart_horizontal" %>
-    </div>
-  </section>
+  <%= turbo_frame_tag "chart_and_list", class: "flex flex-col gap-3" do %>
+    <section>
+      <h2>垂直方向成分</h2>
+      <div id="chart_vertical" class="h-96 w-full">
+        <%= render "chart_vertical" %>
+      </div>
+    </section>
 
-  <section>
-    <h2>各種結果</h2>
-    <%= tag.div data: { controller: "calc-results-page #{ user_signed_in? ? "records-page" : "" }" } do %>
-      <div class="flex overflow-x-auto">
-        <section class="border flex-1 overflow-x-auto">
-          <h3 class="sticky left-0 text-nowrap">計算結果</h2>
-          <div>
-            <%= render "calc_results" %>
-          </div>
-        </section>
-        <% if user_signed_in? %>
-          <section class="border flex-3 overflow-x-auto">
-            <h3 class="sticky left-0">測定結果</h2>
-            <div class="h-261">
-              <div class="flex gap-1 h-20 -space-y-px border-b-2 border-b-gray-300">
-                <div class="grid grid-rows-3 items-center justify-center w-18 flex-none border-r border-gray-300">
-                  <div class="row-span-2 row-start-2">time</div>
-                </div>
-                <div class="grid grid-cols-6 flex-none w-120 gap-1">
-                  <%= render partial: "record_titles/record_title", collection: @record_titles %>
-                </div>
-                <div class="grid grid-rows-3 justify-center items-center w-memo flex-none">
-                  <div class="row-span-2 row-start-2">memo</div>
-                </div>
-              </div>
-              <div>
-                <%= turbo_frame_tag "records" do %>
-                  <%= render partial: "records/record", collection: @records %>
-                <% end %>
-              </div>
+    <section>
+      <h2>水平方向成分</h2>
+      <div id="chart_horizontal" class="h-96 w-full">
+        <%= render "chart_horizontal" %>
+      </div>
+    </section>
+
+    <section>
+      <h2>各種結果</h2>
+      <%= tag.div data: { controller: "calc-results-page #{ user_signed_in? ? "records-page" : "" }" } do %>
+        <div class="flex overflow-x-auto">
+          <section class="border flex-1 overflow-x-auto">
+            <h3 class="sticky left-0 text-nowrap">計算結果</h2>
+            <div>
+              <%= render "calc_results" %>
             </div>
           </section>
-        <% end %>
-      </div>
-      <div class="sticky bottom-0 bg-white">
-        <%= render "pagination" %>
-        <% if user_signed_in? %>
-          <%= form_with method: :get, data: { records_page_target: "pageForm", turbo_frame: "records" } do |f| %>
-            <%= f.hidden_field :page_id, data: { records_page_target: "pageField" } %>
+          <% if user_signed_in? %>
+            <section class="border flex-3 overflow-x-auto">
+              <h3 class="sticky left-0">測定結果</h2>
+              <div class="h-261">
+                <div class="flex gap-1 h-20 -space-y-px border-b-2 border-b-gray-300">
+                  <div class="grid grid-rows-3 items-center justify-center w-18 flex-none border-r border-gray-300">
+                    <div class="row-span-2 row-start-2">time</div>
+                  </div>
+                  <div class="grid grid-cols-6 flex-none w-120 gap-1">
+                    <%= render partial: "record_titles/record_title", collection: @record_titles %>
+                  </div>
+                  <div class="grid grid-rows-3 justify-center items-center w-memo flex-none">
+                    <div class="row-span-2 row-start-2">memo</div>
+                  </div>
+                </div>
+                <div>
+                  <%= turbo_frame_tag "records" do %>
+                    <%= render partial: "records/record", collection: @records %>
+                  <% end %>
+                </div>
+              </div>
+            </section>
           <% end %>
-        <% end %>
-      </div>
-    <% end %>
-  </section>
-<% end %>
+        </div>
+        <div class="sticky bottom-1 bg-white">
+          <%= render "pagination" %>
+          <% if user_signed_in? %>
+            <%= form_with method: :get, data: { records_page_target: "pageForm", turbo_frame: "records" } do |f| %>
+              <%= f.hidden_field :page_id, data: { records_page_target: "pageField" } %>
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
+    </section>
+  <% end %>
 
-<%= render "layouts/terms_and_privacy" %>
+  <%= render "layouts/terms_and_privacy" %>
+</div>
