@@ -70,7 +70,7 @@
             </section>
           <% end %>
         </div>
-        <div class="sticky bottom-1 bg-white">
+        <div class="sticky bottom-0 bg-white">
           <%= render "pagination" %>
           <% if user_signed_in? %>
             <%= form_with method: :get, data: { records_page_target: "pageForm", turbo_frame: "records" } do |f| %>
