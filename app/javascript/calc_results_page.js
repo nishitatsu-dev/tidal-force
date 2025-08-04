@@ -1,37 +1,37 @@
 const HOUR_PER_DAY = 24;
+const TIMES = [
+  "00:00",
+  "01:00",
+  "02:00",
+  "03:00",
+  "04:00",
+  "05:00",
+  "06:00",
+  "07:00",
+  "08:00",
+  "09:00",
+  "10:00",
+  "11:00",
+  "12:00",
+  "13:00",
+  "14:00",
+  "15:00",
+  "16:00",
+  "17:00",
+  "18:00",
+  "19:00",
+  "20:00",
+  "21:00",
+  "22:00",
+  "23:00",
+];
 
-export class CalcResultsPage {
+export default class CalcResultsPage {
   constructor(calcResultsTbodyTarget) {
     this.calcResultsTbodyTarget = calcResultsTbodyTarget;
   }
 
   makeNewTable(pageId) {
-    const times = [
-      "00:00",
-      "01:00",
-      "02:00",
-      "03:00",
-      "04:00",
-      "05:00",
-      "06:00",
-      "07:00",
-      "08:00",
-      "09:00",
-      "10:00",
-      "11:00",
-      "12:00",
-      "13:00",
-      "14:00",
-      "15:00",
-      "16:00",
-      "17:00",
-      "18:00",
-      "19:00",
-      "20:00",
-      "21:00",
-      "22:00",
-      "23:00",
-    ];
     const calcResults = this.#getCalcResults();
 
     for (let row = 0; row < HOUR_PER_DAY; row++) {
@@ -39,7 +39,7 @@ export class CalcResultsPage {
       tr.className = "border-t border-gray-200";
       const tdTime = document.createElement("td");
       tdTime.className = "h-10";
-      tdTime.textContent = times[row];
+      tdTime.textContent = TIMES[row];
       tr.appendChild(tdTime);
       for (let col = 0; col < 8; col++) {
         const td = document.createElement("td");

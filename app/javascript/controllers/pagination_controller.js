@@ -1,5 +1,5 @@
 import { Controller } from "@hotwired/stimulus";
-import { Paginator } from "paginator";
+import Paginator from "paginator";
 
 // Connects to data-controller="pagination"
 export default class extends Controller {

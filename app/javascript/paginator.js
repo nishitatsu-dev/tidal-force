@@ -1,6 +1,6 @@
 const DISPLAY_LENGTH = 17;
 
-export class Paginator {
+export default class Paginator {
   constructor(firstDay, totalDay, currentIndex) {
     this.firstDay = firstDay;
     this.totalDay = totalDay;

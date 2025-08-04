@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 import * as tidalForcePlus from "tidal_force_plus";
 import DatasetBuilder from "dataset_builder";
-import calcResultsFormatter from "calc_results_formatter";
+import CalcResultsFormatter from "calc_results_formatter";
 
 // Connects to data-controller="session-storage"
 export default class extends Controller {
@@ -42,7 +42,7 @@ export default class extends Controller {
     const sunLateralStrengths = sunTidalForces.laterals.strengths.flat();
     const sunLateralAzimuths = sunTidalForces.laterals.azimuths.flat();
 
-    const formatter = new calcResultsFormatter(6, 4);
+    const formatter = new CalcResultsFormatter(6, 4);
     sessionStorage.setItem("moonVerticals", formatter.format(moonVerticals));
     sessionStorage.setItem("sunVerticals", formatter.format(sunVerticals));
     sessionStorage.setItem("moonAndSunVerticals", formatter.format(moonAndSunVerticals));
