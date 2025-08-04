@@ -22,15 +22,11 @@
       }
     },
     legend: {
-      data: ['Moon', 'Sun', 'Moon + Sun', 'Jupiter (Distance)']
-    },
-    toolbox: {
-      feature: {
-        saveAsImage: {}
-      }
+      data: ['Moon', 'Sun', 'Moon + Sun', 'Jupiter (Distance)'],
     },
     grid: {
       left: '3%',
+      top: '20%',
       right: '4%',
       bottom: '14%',
       containLabel: true
@@ -49,8 +45,11 @@
     ],
     xAxis: [
       {
+        position: 'bottom',
         type: 'category',
         boundaryGap: false,
+        axisLine: { onZero: false },
+        axisTick: { inside: true },
         data: xAxisData
       }
     ],
@@ -58,6 +57,10 @@
       {
         type: 'value',
         name: 'Tidal Force [µm/s^2]',
+        nameTextStyle: {
+          align: 'center',
+          padding: [0, 0, 0, 60],
+        },
         max: 2,
         min: -1,
         axisLine: {
