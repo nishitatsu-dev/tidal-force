@@ -1,5 +1,6 @@
 import { Controller } from "@hotwired/stimulus"
 import * as tidalForcePlus from "tidal_force_plus";
+import DatasetBuilder from "dataset_builder";
 import calcResultsFormatter from "calc_results_formatter";
 
 // Connects to data-controller="session-storage"
@@ -17,15 +18,14 @@ export default class extends Controller {
   }
 
   #setBasicParams(main, firstDate, lastDate) {
-    const xAxisData = main.getDateTimes["xAxisData"];
-    const ISODateTimes = main.getDateTimes["ISODateTimes"];
-    const totalDay = main.getDateTimes["totalDay"];
+    const totalDay = main.getTotalDay;
+    const datasetBuilder = new DatasetBuilder(firstDate, totalDay);
+    const xAxisData = datasetBuilder.buildXAxisData();
 
-    sessionStorage.setItem("xAxisData", xAxisData);
-    sessionStorage.setItem("ISODateTimes", ISODateTimes);
     sessionStorage.setItem("firstDay", firstDate);
     sessionStorage.setItem("lastDay", lastDate);
     sessionStorage.setItem("totalDay", totalDay);
+    sessionStorage.setItem("xAxisData", xAxisData);
   }
 
   #setTidalForcePlus(main) {

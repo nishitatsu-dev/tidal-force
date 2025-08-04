@@ -72,27 +72,8 @@ export class Main {
     return jupiterDistances;
   }
 
-  get getDateTimes() {
-    const totalDay = this.#getObserverState.getDateTimeDetails["totalDay"];
-    const totalHour = totalDay * HOUR_PER_DAY;
-    const xAxisData = [];
-    const ISODateTimes = [];
-    let dataPoint = new Date(this.first_date);
-    dataPoint.setHours(0);
-    let dateTime = "";
-    let ISODateTime = "";
-    for (let i = 0; i < totalHour; i++) {
-      dateTime = dataPoint.toString();
-      xAxisData.push(dateTime);
-      ISODateTime = dataPoint.toISOString();
-      ISODateTimes.push(ISODateTime);
-      dataPoint.setHours(dataPoint.getHours() + 1);
-    }
-    return {
-      xAxisData: xAxisData,
-      ISODateTimes: ISODateTimes,
-      totalDay: totalDay,
-    };
+  get getTotalDay() {
+    return this.#getObserverState.getDateTimeDetails["totalDay"];
   }
 }
 
