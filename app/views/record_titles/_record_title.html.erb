@@ -5,7 +5,7 @@
         <%= link_to "編集", new_record_title_path(column_number: record_title.column_number), data: { turbo_frame: "record_title_#{record_title.column_number}" } %>
       <% else %>
         <%= link_to "編集", edit_record_title_path(record_title), data: { turbo_frame: "record_title_#{record_title.column_number}" } %>
-        <%= button_to "削除", record_title, method: :delete, class: "btn-record-primary" %>
+        <%= button_to "削除", record_title, method: :delete, data: { turbo_confirm: "本当に削除しますか？" }, class: "btn-record-primary" %>
       <% end %>
     </div>
     <div class="row-span-2 text-left text-wrap h-12 overflow-y-auto">
