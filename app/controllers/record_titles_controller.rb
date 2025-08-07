@@ -1,4 +1,7 @@
 class RecordTitlesController < ApplicationController
+  prepend_before_action :skip_timeout, only: [ :create, :update ]
+  before_action :authenticate_user!, only: [ :new, :edit ]
+
   def index
     @record_titles = make_record_titles
   end

@@ -2,7 +2,15 @@ class ApplicationController < ActionController::Base
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   allow_browser versions: :modern
 
+  def after_sign_in_path_for(resource)
+    root_path
+  end
+
   private
+  def skip_timeout
+    request.env["devise.skip_timeout"] = true
+  end
+
   def get_db_records(date)
     date_hour_0000 = Time.zone.parse(date + " 00:00")
     date_hour_2300 = Time.zone.parse(date + " 23:00")
