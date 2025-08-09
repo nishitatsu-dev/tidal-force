@@ -14,8 +14,7 @@ class RecordTitlesController < ApplicationController
   end
 
   def create
-    @record_title = RecordTitle.new(record_title_params)
-    @record_title.user_id = current_user.id
+    @record_title = current_user.record_titles.new(record_title_params)
     if @record_title.save
       redirect_to @record_title, notice: "作成に成功しました。"
     else

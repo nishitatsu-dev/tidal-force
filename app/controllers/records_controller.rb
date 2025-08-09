@@ -15,8 +15,7 @@ class RecordsController < ApplicationController
   end
 
   def create
-    @record = Record.new(record_params)
-    @record.user_id = current_user.id
+    @record = current_user.records.new(record_params)
     if @record.save
       redirect_to @record, notice: "作成に成功しました。"
     else
