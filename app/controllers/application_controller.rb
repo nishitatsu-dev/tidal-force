@@ -7,10 +7,6 @@ class ApplicationController < ActionController::Base
   end
 
   private
-  def skip_timeout
-    request.env["devise.skip_timeout"] = true
-  end
-
   def get_db_records(date)
     date_hour_0000 = Time.zone.parse(date + " 00:00")
     date_hour_2300 = Time.zone.parse(date + " 23:00")
