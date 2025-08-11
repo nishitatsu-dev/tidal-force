@@ -2,7 +2,6 @@ Rails.application.routes.draw do
   root "home#index"
   get "home/index"
   get "supplement/index"
-  resources :titles
   resources :record_titles do
     member do
       get :confirm_destroy
