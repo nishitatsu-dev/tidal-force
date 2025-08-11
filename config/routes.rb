@@ -3,8 +3,16 @@ Rails.application.routes.draw do
   get "home/index"
   get "supplement/index"
   resources :titles
-  resources :record_titles
-  resources :records
+  resources :record_titles do
+    member do
+      get :confirm_destroy
+    end
+  end
+  resources :records do
+    member do
+      get :confirm_destroy
+    end
+  end
   devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
   # devise_scope :user do
   #   delete "sign_out", to: "devise/sessions#destroy", as: :destroy_user_session

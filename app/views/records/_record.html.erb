@@ -33,7 +33,7 @@
     <% else %>
       <div class="flex gap-2 justify-center items-center flex-none">
         <%= link_to "編集", edit_record_path(record), data: { turbo_frame: "record_#{extract_date_hour(record)}" } %>
-        <%= button_to "削除", record, method: :delete, data: { turbo_confirm: "本当に削除しますか？" }, class: "btn-record-primary" %>
+        <%= link_to "削除", confirm_destroy_record_path(record), data: { turbo_frame: "record_#{extract_date_hour(record)}" } %>
       </div>
     <% end %>
   </div>

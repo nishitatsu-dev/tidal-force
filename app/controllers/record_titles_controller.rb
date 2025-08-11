@@ -1,5 +1,5 @@
 class RecordTitlesController < ApplicationController
-  before_action :authenticate_user!, only: [ :show, :new, :edit ]
+  before_action :authenticate_user!, only: [ :index, :show, :new, :edit, :confirm_destroy ]
 
   def index
     @record_titles = make_record_titles
@@ -33,6 +33,10 @@ class RecordTitlesController < ApplicationController
     else
       render :edit, status: :unprocessable_entity
     end
+  end
+
+  def confirm_destroy
+    @record_title = RecordTitle.find(params[:id])
   end
 
   def destroy

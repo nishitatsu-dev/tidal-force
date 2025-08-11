@@ -1,0 +1,9 @@
+<div role="dialog" tabindex="-1" class="fixed inset-0 z-30 flex items-center justify-center w-full h-screen p-2">
+  <div class="fixed inset-0 block w-full h-screen cursor-default bg-gray-900/30"></div>
+  <div class="relative z-20 max-w-sm max-h-screen overflow-y-auto bg-white shadow-lg rounded-md">
+    <div class="flex gap-2 place-items-center">
+      <%= link_to "キャンセル", current_model %>
+      <%= button_to "OK", current_model, method: :delete, class: "btn-record-primary" %>
+    </div>
+  </div>
+</div>

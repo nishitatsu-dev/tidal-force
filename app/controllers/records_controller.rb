@@ -1,5 +1,5 @@
 class RecordsController < ApplicationController
-  before_action :authenticate_user!, only: [ :show, :new, :edit ]
+  before_action :authenticate_user!, only: [ :index, :show, :new, :edit, :confirm_destroy ]
 
   def index
     @records = make_one_day_records
@@ -35,6 +35,10 @@ class RecordsController < ApplicationController
     else
       render :edit, status: :unprocessable_entity
     end
+  end
+
+  def confirm_destroy
+    @record = Record.find(params[:id])
   end
 
   def destroy
