@@ -19,15 +19,10 @@
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
-    <%= stylesheet_link_tag "https://unpkg.com/@primer/view-components@0.43.4/app/assets/styles/primer_view_components.css", "crossorigin": "anonymous", "data-turbo-track": "reload" %>
-    <%= stylesheet_link_tag "https://unpkg.com/@primer/css@22.0.0/dist/primer.css", "crossorigin": "anonymous", "data-turbo-track": "reload" %>
-    <%= stylesheet_link_tag "https://unpkg.com/@primer/primitives@10.7.0/dist/css/primitives.css", "crossorigin": "anonymous", "data-turbo-track": "reload" %>
-    <%= stylesheet_link_tag "https://unpkg.com/@primer/primitives@10.7.0/dist/css/functional/themes/light.css", "crossorigin": "anonymous", "data-turbo-track": "reload" %>
-    <%= stylesheet_link_tag "https://unpkg.com/@primer/primitives@10.7.0/dist/css/functional/themes/dark.css", "crossorigin": "anonymous", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
-  <body data-color-mode="light" data-light-theme="light" data-dark-theme="dark">
+  <body>
     <div class="mx-auto max-w-7xl">
       <%= render "layouts/header" %>
       <p class="notice"><%= notice %></p>
