@@ -6,8 +6,8 @@
         <%= f.text_area :title, class: "rounded-md border ring-gray-300 cursor-pointer" %>
         <%= f.hidden_field :column_number %>
         <div class="flex gap-2 place-items-center">
-          <%= f.submit "更新", class: "btn-record-primary" %>
-          <%= link_to "キャンセル", record_title %>
+          <%= f.submit "更新", class: "link-primary" %>
+          <%= link_to "キャンセル", record_title, class: "link-primary" %>
         </div>
       <% end %>
     </div>

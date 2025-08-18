@@ -28,12 +28,12 @@
     </div>
     <% if record.id.nil? %>
       <div class="flex justify-center items-center text-center sticky top-0 right-0 flex-none">
-        <%= link_to "新規作成", new_record_path(recorded_at: record.recorded_at), data: { turbo_frame: "record_#{extract_date_hour(record)}" }, class: "" %>
+        <%= link_to "新規作成", new_record_path(recorded_at: record.recorded_at), data: { turbo_frame: "record_#{extract_date_hour(record)}" }, class: "link-primary" %>
       </div>
     <% else %>
       <div class="flex gap-2 justify-center items-center flex-none">
-        <%= link_to "編集", edit_record_path(record), data: { turbo_frame: "record_#{extract_date_hour(record)}" } %>
-        <%= link_to "削除", confirm_destroy_record_path(record), data: { turbo_frame: "record_#{extract_date_hour(record)}" } %>
+        <%= link_to "編集", edit_record_path(record), data: { turbo_frame: "record_#{extract_date_hour(record)}"}, class: "link-primary" %>
+        <%= link_to "削除", confirm_destroy_record_path(record), data: { turbo_frame: "record_#{extract_date_hour(record)}" }, class: "link-primary" %>
       </div>
     <% end %>
   </div>

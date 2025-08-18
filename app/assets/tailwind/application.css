@@ -6,13 +6,13 @@
     max-width: 18rem;
   }
 
-  .btn-record-primary {
-    color: var(--fgColor-link);
+  .link-primary {
+    color: var(--color-blue-600);
     cursor: pointer;
     &:hover {
       @media (hover: hover) {
         text-decoration: underline;
-        text-decoration-color: var(--fgColor-link);
+        text-decoration-color: var(--color-blue-600);
       }
     }
   }
