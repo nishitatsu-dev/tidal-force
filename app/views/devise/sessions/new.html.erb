@@ -4,17 +4,15 @@
   <div class="relative z-20 w-full max-w-xs max-h-screen overflow-y-auto bg-white shadow-lg rounded-md p-5">
     <h2 class="mb-5 text-center text-2xl"><%= t('.sign_in') %></h2>
     <div class="mx-2">
-      <div class="mb-3">
-        <%= render "/devise/shared/link_omniauthable" %>
+      <div class="text-center mb-3">
+        <span><%= render "/devise/shared/link_omniauthable" %></span>
       </div>
-      <p class="flex justify-between mb-3">
-        <span class="line-through">　　　　　　</span>
-        <span>または</span>
-        <span class="line-through">　　　　　　</span>
+      <p class="text-center mb-3">
+        <span>〜〜〜〜〜　または　〜〜〜〜〜</span>
       </p>
       <div class="mb-8">
         <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-          <div class="mb-3">
+          <div class="w-45 mx-auto mb-3">
             <div class="field">
               <%= f.label :email %><br />
               <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "border rounded-sm" %>
@@ -33,7 +31,7 @@
             <% end %>
           </div>
 
-          <div class="actions">
+          <div class="actions text-center">
             <%= f.submit t('.sign_in'), class: "py-1.5 px-4 transition-colors bg-indigo-600 border active:bg-indigo-800 font-medium border-indigo-700 text-white w-45 rounded-sm hover:bg-indigo-700" %>
           </div>
         <% end %>
