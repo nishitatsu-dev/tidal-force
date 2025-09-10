@@ -25,11 +25,10 @@
       data: ['Moon', 'Sun', 'Moon + Sun', 'Jupiter (Distance)'],
     },
     grid: {
-      left: '3%',
+      left: '12%',
       top: '20%',
-      right: '4%',
-      bottom: '14%',
-      containLabel: true
+      right: '12%',
+      bottom: '21%',
     },
     dataZoom: [
       {
@@ -66,7 +65,7 @@
         axisLine: {
           show: true,
           lineStyle: {
-            color: 'rgb(111, 149, 255)'
+            color: 'rgb(55, 100, 255)'
           }
         }
       },
@@ -80,7 +79,7 @@
         axisLine: {
           show: true,
           lineStyle: {
-            color: 'rgb(28, 191, 115)'
+            color: 'rgb(0, 138, 39)'
           }
         }
       }
@@ -107,6 +106,7 @@
       {
         name: 'Moon + Sun',
         type: 'line',
+        color: 'rgb(111, 144, 255)',
         lineStyle: {
           width: 0
         },
@@ -133,10 +133,10 @@
         name: 'Jupiter (Distance)',
         type: 'line',
         yAxisIndex: 1,
-        symbol: 'none',
+        color: 'rgb(128, 255, 165)',
+        symbol: 'roundRect',
         lineStyle: {
-          color: 'rgb(128, 255, 165)',
-          width: 4,
+          color: 'rgb(0, 209, 59)',
           opacity: 0.8
         },
         emphasis: {

@@ -30,16 +30,16 @@
   },
   grid: [
     {
-      left: '16%',
+      left: '12%',
       top: '20%',
-      right: '9%',
-      height: '23%'
+      right: '12%',
+      height: '23%',
     },
     {
-      left: '16%',
-      right: '9%',
+      left: '12%',
+      right: '12%',
       bottom: '22%',
-      height: '23%'
+      height: '23%',
     }
   ],
   dataZoom: [
@@ -82,7 +82,7 @@
       name: 'Tidal Force [µm/s^2]',
       nameTextStyle: {
         align: 'center',
-        padding: [0, 0, 0, 37],
+        padding: [0, 0, 0, 60],
       },
       max: 1.5,
       min: 0,
@@ -94,6 +94,10 @@
       gridIndex: 1,
       type: 'value',
       name: 'Azimuth [deg]',
+      nameTextStyle: {
+        align: 'center',
+        padding: [0, 0, 0, 20],
+      },
       max: 360,
       min: 0,
       axisLine: {
@@ -121,7 +125,9 @@
       type: 'line',
       xAxisIndex: 1,
       yAxisIndex: 1,
-      color: 'rgb(240, 162, 85)',
+      color: 'rgb(255, 191, 0)',
+      symbol: 'diamond',
+      symbolSize: 6,
       data: moonLateralAzimuths
     },
     {
@@ -129,7 +135,9 @@
       type: 'line',
       xAxisIndex: 1,
       yAxisIndex: 1,
-      color: 'rgb(164, 62, 177)',
+      color: 'rgb(250, 0, 135)',
+      symbol: 'diamond',
+      symbolSize: 6,
       data: sunLateralAzimuths
     }
   ]
