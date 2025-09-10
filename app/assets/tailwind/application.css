@@ -1,9 +1,21 @@
 @import "tailwindcss";
 
 @layer components {
+  .w-time {
+    width: 72px;
+  }
+
+  .w-records {
+    width: 480px;
+  }
+
   .w-memo {
     width: 55svw;
     max-width: 18rem;
+  }
+
+  .w-record-links {
+    width: 72px;
   }
 
   .link-primary {
@@ -15,5 +27,31 @@
         text-decoration-color: var(--color-blue-600);
       }
     }
+  }
+
+  .border-b-thead {
+    border-bottom-width: 2px;
+    border-color: var(--color-gray-300);
+  }
+
+  .divide-x-tr {
+    & > :not(:last-child) {
+      border-inline-start-width: 0px;
+      border-inline-end-width: 1px;
+      border-color: var(--color-gray-300);
+    }
+  }
+
+  .divide-y-tbody {
+    & > :not(:last-child) {
+      border-top-width: 0px;
+      border-bottom-width: 1px;
+      border-color: var(--color-gray-200);
+    }
+  }
+
+  .border-t-record {
+    border-top-width: 1px;
+    border-color: var(--color-gray-200);
   }
 }
