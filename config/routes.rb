@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   root "home#index"
   get "home/index"
-  get "supplement/index"
+  get "about/index"
   resources :record_titles do
     member do
       get :confirm_destroy
