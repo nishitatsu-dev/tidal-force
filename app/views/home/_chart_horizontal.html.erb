@@ -5,11 +5,25 @@
   var myChart = echarts.init(chartDom);
   var option;
 
-  const xAxisData = sessionStorage.getItem('xAxisData').split(',');
-  const moonLateralStrengths = sessionStorage.getItem('moonLateralStrengths').split(',').map(Number);
-  const moonLateralAzimuths = sessionStorage.getItem('moonLateralAzimuths').split(',').map(Number);
-  const sunLateralStrengths = sessionStorage.getItem('sunLateralStrengths').split(',').map(Number);
-  const sunLateralAzimuths = sessionStorage.getItem('sunLateralAzimuths').split(',').map(Number);
+  let xAxisData = [];
+  let moonLateralStrengths = [];
+  let moonLateralAzimuths = [];
+  let sunLateralStrengths = [];
+  let sunLateralAzimuths = [];
+  const firstDay = sessionStorage.getItem('firstDay');
+  if (firstDay !== null) {
+    xAxisData = sessionStorage.getItem('xAxisData').split(',');
+    moonLateralStrengths = sessionStorage.getItem('moonLateralStrengths').split(',').map(Number);
+    moonLateralAzimuths = sessionStorage.getItem('moonLateralAzimuths').split(',').map(Number);
+    sunLateralStrengths = sessionStorage.getItem('sunLateralStrengths').split(',').map(Number);
+    sunLateralAzimuths = sessionStorage.getItem('sunLateralAzimuths').split(',').map(Number);
+  } else {
+    xAxisData = ["No data"];
+    moonLateralStrengths = [0];
+    moonLateralAzimuths = [0];
+    sunLateralStrengths = [0];
+    sunLateralAzimuths = [0];
+  }
 
   option = {
   tooltip: {

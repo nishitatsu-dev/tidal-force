@@ -5,11 +5,25 @@
   var myChart = echarts.init(chartDom);
   var option;
 
-  const moonVerticals = sessionStorage.getItem('moonVerticals').split(',').map(Number);
-  const sunVerticals = sessionStorage.getItem('sunVerticals').split(',').map(Number);
-  const moonAndSunVerticals = sessionStorage.getItem('moonAndSunVerticals').split(',').map(Number);
-  const jupiterDistances = sessionStorage.getItem('jupiterDistances').split(',').map(Number);
-  const xAxisData = sessionStorage.getItem('xAxisData').split(',');
+  let moonVerticals = [];
+  let sunVerticals = [];
+  let moonAndSunVerticals = [];
+  let jupiterDistances = [];
+  let xAxisData = [];
+  const firstDay = sessionStorage.getItem('firstDay');
+  if (firstDay !== null) {
+    moonVerticals = sessionStorage.getItem('moonVerticals').split(',').map(Number);
+    sunVerticals = sessionStorage.getItem('sunVerticals').split(',').map(Number);
+    moonAndSunVerticals = sessionStorage.getItem('moonAndSunVerticals').split(',').map(Number);
+    jupiterDistances = sessionStorage.getItem('jupiterDistances').split(',').map(Number);
+    xAxisData = sessionStorage.getItem('xAxisData').split(',');
+  } else {
+    moonVerticals = [0];
+    sunVerticals = [0];
+    moonAndSunVerticals = [0];
+    jupiterDistances = [0];
+    xAxisData = ["No data"];
+  }
 
   option = {
     tooltip: {
