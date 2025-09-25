@@ -2,7 +2,7 @@
 <div role="dialog" tabindex="-1" class="fixed inset-0 z-30 flex items-center justify-center w-full h-screen p-2">
   <div class="fixed inset-0 block w-full h-screen cursor-default bg-gray-900/30"></div>
   <div class="relative z-20 w-full max-w-xs max-h-screen overflow-y-auto bg-white shadow-lg rounded-md p-5">
-    <h2 class="mb-5 text-center text-2xl"><%= t('.sign_in') %></h2>
+    <h2 class="mb-5 text-center text-2xl"><%= t(".sign_in") %></h2>
     <div class="mx-2">
       <div class="text-center mb-3">
         <span><%= render "/devise/shared/link_omniauthable" %></span>
@@ -32,7 +32,7 @@
           </div>
 
           <div class="actions text-center">
-            <%= f.submit t('.sign_in'), class: "py-1.5 px-4 transition-colors bg-indigo-600 border active:bg-indigo-800 font-medium border-indigo-700 text-white w-45 rounded-sm hover:bg-indigo-700" %>
+            <%= f.submit t(".sign_in"), class: "py-1.5 px-4 transition-colors bg-indigo-600 border active:bg-indigo-800 font-medium border-indigo-700 text-white w-45 rounded-sm hover:bg-indigo-700" %>
           </div>
         <% end %>
       </div>
