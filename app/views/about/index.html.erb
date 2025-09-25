@@ -21,7 +21,13 @@
           </li>
           <li>
             本アプリで行っている計算も、上記のサイトを参考にしました。<br>
-            （地球、月、太陽の位置算出には、後述の書籍を参考にしました。）
+            地球、月、太陽の位置算出には、後述（「木星との距離について」に記載）の書籍を参考にしました。
+          </li>
+          <li>
+            表示地点の経緯度は、以下のサイトの値を参考にしています。<br>
+            <%= link_to "https://www.data.jma.go.jp/kaiyou/db/tide/suisan/index.php", target: "_blank", class: "link-primary" do %>
+              気象庁 | 潮汐・海面水位のデータ 潮位表<%= image_tag "link-open_in_new.svg", class: "inline" %>
+            <% end %>
           </li>
         </ul>
       </details>
