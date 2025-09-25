@@ -33,11 +33,8 @@
 <%= turbo_frame_tag "chart_and_list" do %>
   <section class="text-center mb-6 sm:mb-10">
     <h2 class="inline-flex justify-center items-center">
-      「起潮力(垂直方向)
-      <%= link_to image_tag("link-help.svg"), about_index_path(anchor: "tidal_force"), data: { turbo: false }, class: "link-primary" %>
-      」と「木星との距離
-      <%= link_to image_tag("link-help.svg"), about_index_path(anchor: "jupiter"), data: { turbo: false }, class: "link-primary" %>
-      」
+      「起潮力(垂直方向)」と「木星との距離」
+      <%= link_to image_tag("link-help.svg"), about_index_path, data: { turbo: false }, class: "link-primary" %>
     </h2>
     <div id="chart_vertical" class="h-96 w-full">
       <%= render "chart_vertical" %>
@@ -46,8 +43,8 @@
 
   <section class="text-center mb-6">
     <h2 class="inline-flex justify-center items-center">
-      <span>起潮力(水平方向) の「強さ」と「方位角」</span>
-      <%= link_to image_tag("link-help.svg"), about_index_path(anchor: "tidal_force"), data: { turbo: false }, class: "link-primary" %>
+      起潮力(水平方向) の「強さ」と「方位角」
+      <%= link_to image_tag("link-help.svg"), about_index_path, data: { turbo: false }, class: "link-primary" %>
     </h2>
     <div id="chart_horizontal" class="h-96 w-full">
       <%= render "chart_horizontal" %>
