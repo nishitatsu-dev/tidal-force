@@ -10,7 +10,7 @@
         <%= link_to "削除", confirm_destroy_record_title_path(record_title), data: { turbo_frame: "record_title_#{record_title.column_number}" }, class: "link-primary" %>
       </div>
     <% end %>
-    <div class="row-span-2 text-left text-wrap h-12 overflow-y-auto">
+    <div class="row-span-2 text-left text-wrap wrap-break-word h-12 overflow-y-auto">
       <%= display_line_breaks record_title.title %>
     </div>
   </div>
