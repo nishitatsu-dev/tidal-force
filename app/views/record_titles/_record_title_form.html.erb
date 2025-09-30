@@ -2,8 +2,9 @@
   <div role="dialog" tabindex="-1" class="fixed inset-0 z-30 flex items-center justify-center w-full h-screen p-2">
     <div class="fixed inset-0 block w-full h-screen cursor-default bg-gray-900/30"></div>
     <div class="relative z-20 max-w-sm max-h-screen overflow-y-auto bg-white shadow-lg rounded-md">
-      <%= form_with model: record_title, class: "flex gap-2 items-center m-2" do |f| %>
-        <%= f.text_area :title, class: "rounded-md border ring-gray-300 cursor-pointer" %>
+      <%= form_with model: record_title, class: "flex gap-2 items-center m-4">
+          <p class="text-xs bg-emerald-200">※最大15文字（改行は1文字に相当）</p>
+        <%= f.text_area :title, maxlength: 15, class: "rounded-md border ring-gray-300 cursor-pointer" %>
         <%= f.hidden_field :column_number %>
         <div class="flex gap-2 place-items-center">
           <%= f.submit "更新", class: "link-primary" %>
