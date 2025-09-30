@@ -39,7 +39,8 @@
           </div>
           <div class="flex flex-col my-2">
             <%= f.label :memo, "memo" %>
-            <%= f.text_area :memo, class: "text-wrap overflow-y-auto rounded-md border ring-gray-300 cursor-pointer" %>
+<p class="inline-block text-xs bg-emerald-200">※最大150文字（改行は1文字に相当）</p>
+            <%= f.text_area :memo, maxlength: 150, class: "text-wrap overflow-y-auto rounded-md border ring-gray-300 cursor-pointer" %>
           </div>
           <%= f.hidden_field :recorded_at %>
           <div class="flex flex-none gap-2 justify-center items-center">
