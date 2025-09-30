@@ -32,7 +32,7 @@ class ApplicationController < ActionController::Base
   def make_record_titles
     column_number_indexed_titles = current_user.record_titles.index_by { |title| title.column_number }
     (0..5).map do |column_number|
-      column_number_indexed_titles[column_number] || RecordTitle.new(column_number: column_number, title: "Column_#{column_number + 1}")
+      column_number_indexed_titles[column_number] || RecordTitle.new(column_number: column_number, title: "No.#{column_number + 1}")
     end
   end
 end
