@@ -1,10 +1,15 @@
 class HomeController < ApplicationController
+  before_action :authenticate_user!, only: [ :new ]
+
   def index
     if user_signed_in?
       @record_titles = make_record_titles
       set_session
       @records = make_one_day_records
     end
+  end
+
+  def new
   end
 
   private
