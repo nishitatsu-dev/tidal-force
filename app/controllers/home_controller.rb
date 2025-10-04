@@ -27,7 +27,7 @@ class HomeController < ApplicationController
     elsif !session[:first_date].blank?
       session[:first_date]
     else
-      Date.today.strftime("%Y-%m-%d")
+      Date.current.strftime("%Y-%m-%d")
     end
 
     session[:page_id] = params[:page_id].to_i || 0
