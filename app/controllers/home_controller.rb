@@ -1,15 +1,25 @@
 class HomeController < ApplicationController
-  before_action :authenticate_user!, only: [ :new ]
+  before_action :authenticate_user!, only: [ :memo_index, :memo_new ]
+  before_action :set_session
 
   def index
-    if user_signed_in?
-      @record_titles = make_record_titles
-      set_session
-      @records = make_one_day_records
-    end
+    @conditions = get_calc_conditions
   end
 
   def new
+    @conditions = get_calc_conditions
+  end
+
+  def memo_index
+    @conditions = get_calc_conditions
+    @record_titles = make_record_titles
+    @records = make_one_day_records
+    render :index
+  end
+
+  def memo_new
+    @conditions = get_calc_conditions
+    render :new
   end
 
   private
@@ -22,6 +32,14 @@ class HomeController < ApplicationController
       "Asia/Tokyo"
     end
 
+    session[:location] = if !params[:location].blank?
+      params[:location]
+    elsif !session[:location].blank?
+      session[:location]
+    else
+      "AKASHI"
+    end
+
     session[:first_date] = if !params[:first_date].blank?
       params[:first_date]
     elsif !session[:first_date].blank?
@@ -30,6 +48,22 @@ class HomeController < ApplicationController
       Date.current.strftime("%Y-%m-%d")
     end
 
+    session[:last_date] = if !params[:last_date].blank?
+      params[:last_date]
+    elsif !session[:last_date].blank?
+      session[:last_date]
+    else
+      Date.tomorrow.strftime("%Y-%m-%d")
+    end
+
     session[:page_id] = params[:page_id].to_i || 0
+  end
+
+  def get_calc_conditions
+    {
+      location: session[:location],
+      first_date: session[:first_date],
+      last_date: session[:last_date]
+    }
   end
 end

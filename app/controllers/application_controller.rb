@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   allow_browser versions: :modern
 
   def after_sign_in_path_for(resource)
-    new_home_path
+    memo_new_home_path(current_user.id)
   end
 
   def after_sign_out_path_for(resource)
