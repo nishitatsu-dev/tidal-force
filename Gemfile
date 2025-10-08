@@ -44,6 +44,7 @@ gem "thruster", require: false
 gem "devise", "~> 4.9"
 gem "devise-i18n"
 gem "tailwindcss-rails", "~> 4.2"
+gem "meta-tags"
 gem "omniauth-google-oauth2"
 gem "omniauth-rails_csrf_protection"
 
